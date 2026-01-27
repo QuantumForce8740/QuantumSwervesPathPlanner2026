@@ -65,6 +65,33 @@ void RobotContainer::ConfigureBindings()
     joystick.LeftBumper().OnTrue(drivetrain.RunOnce([this] { drivetrain.SeedFieldCentric(); }));
 
     drivetrain.RegisterTelemetry([this](auto const &state) { logger.Telemeterize(state); });
+
+    bool targetVisible = false;
+    double targetYaw = 0.0;
+    auto results = camera.GetAllUnreadResults();
+    if (results.size() > 0) {
+        // Camera processed a new frame since last
+        // Get the last one in the list.
+        auto result = results[results.size() - 1];
+        if (result.HasTargets()) {
+        // At least one AprilTag was seen by the camera
+        for (auto& target : result.GetTargets()) {
+            if (target.GetFiducialId() == 7) {
+            // Found Tag 7, record its information
+            targetYaw = target.GetYaw();
+            targetVisible = true;
+            }
+        }
+        }
+    }
+
+    auto turn = -1.0 * targetYaw * VISION_TURN_kP * MaxAngularRate;
+    // Auto-align when requested
+    joystick.RightBumper().OnTrue(
+        drivetrain.ApplyRequest([this, turn]() -> auto&& {
+            return drive.WithRotationalRate(turn);
+        })
+    );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

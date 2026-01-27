@@ -9,6 +9,7 @@
 #include <frc2/command/button/CommandXboxController.h>
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "Telemetry.h"
+#include <photon/PhotonCamera.h>
 
 class RobotContainer {
 private:
@@ -29,6 +30,9 @@ private:
     Telemetry logger{MaxSpeed};
 
     frc2::CommandXboxController joystick{0};
+
+    photon::PhotonCamera camera{0};
+    static constexpr double VISION_TURN_kP = 0.01;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
