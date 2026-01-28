@@ -76,10 +76,10 @@ void RobotContainer::ConfigureBindings()
         if (result.HasTargets()) {
         // At least one AprilTag was seen by the camera
         for (auto& target : result.GetTargets()) {
-            if (target.GetFiducialId() == 7) {
-            // Found Tag 7, record its information
-            targetYaw = target.GetYaw();
-            targetVisible = true;
+            if (target.GetFiducialId() == 12) {
+                // Found Tag 7, record its information
+                targetYaw = target.GetYaw();
+                targetVisible = true;
             }
         }
         }
@@ -87,11 +87,14 @@ void RobotContainer::ConfigureBindings()
 
     auto turn = -1.0 * targetYaw * VISION_TURN_kP * MaxAngularRate;
     // Auto-align when requested
-    joystick.RightBumper().OnTrue(
-        drivetrain.ApplyRequest([this, turn]() -> auto&& {
-            return drive.WithRotationalRate(turn);
-        })
-    );
+    frc::SmartDashboard::PutNumber("Target Yaw", targetYaw);
+    if (targetVisible){
+        joystick.RightBumper().WhileTrue(
+            drivetrain.ApplyRequest([this, turn]() -> auto&& {
+                return drive.WithRotationalRate(turn);
+            })
+        );
+    }
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

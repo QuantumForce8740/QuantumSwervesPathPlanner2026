@@ -31,7 +31,7 @@ private:
 
     frc2::CommandXboxController joystick{0};
 
-    photon::PhotonCamera camera{0};
+    photon::PhotonCamera camera{"camera0"};
     static constexpr double VISION_TURN_kP = 0.01;
 
 public:
