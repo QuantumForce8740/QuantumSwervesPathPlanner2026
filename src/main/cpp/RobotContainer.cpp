@@ -65,36 +65,40 @@ void RobotContainer::ConfigureBindings()
     joystick.LeftBumper().OnTrue(drivetrain.RunOnce([this] { drivetrain.SeedFieldCentric(); }));
 
     drivetrain.RegisterTelemetry([this](auto const &state) { logger.Telemeterize(state); });
+    
+    // if (results.size() > 0) {
+    //     // Camera processed a new frame since last
+    //     // Get the last one in the list.
+    //     auto result = results[results.size() - 1];
+    //     if (result.HasTargets()) {
+    //     // At least one AprilTag was seen by the camera
+    //     for (auto& target : result.GetTargets()) {
+    //         if (target.GetFiducialId() == 12) {
+    //             // Found Tag 7, record its information
+    //             targetYaw = target.GetYaw();
+    //             targetVisible = true;
+    //         }
+    //     }
+    //     }
+    // }
 
-    bool targetVisible = false;
-    double targetYaw = 0.0;
-    auto results = camera.GetAllUnreadResults();
-    if (results.size() > 0) {
-        // Camera processed a new frame since last
-        // Get the last one in the list.
-        auto result = results[results.size() - 1];
-        if (result.HasTargets()) {
-        // At least one AprilTag was seen by the camera
-        for (auto& target : result.GetTargets()) {
-            if (target.GetFiducialId() == 12) {
-                // Found Tag 7, record its information
-                targetYaw = target.GetYaw();
-                targetVisible = true;
-            }
-        }
-        }
-    }
-
-    auto turn = -1.0 * targetYaw * VISION_TURN_kP * MaxAngularRate;
-    // Auto-align when requested
-    frc::SmartDashboard::PutNumber("Target Yaw", targetYaw);
-    if (targetVisible){
-        joystick.RightBumper().WhileTrue(
-            drivetrain.ApplyRequest([this, turn]() -> auto&& {
-                return drive.WithRotationalRate(turn);
-            })
-        );
-    }
+    // auto turn = -1.0 * targetYaw * VISION_TURN_kP * MaxAngularRate;
+    // // Auto-align when requested
+    // frc::SmartDashboard::PutNumber("Target Yaw", targetYaw);
+    // frc::SmartDashboard::PutNumber("Unread Results", results.size());
+    // frc::SmartDashboard::PutBoolean("Has target4", results.back().HasTargets());
+    // frc::SmartDashboard::PutBoolean("Has target3", results[2].HasTargets());
+    // frc::SmartDashboard::PutBoolean("Has target2", results[1].HasTargets());
+    // frc::SmartDashboard::PutBoolean("Has target", results[0].HasTargets());
+    // auto results = AimAtTarget().GetResults();
+    // frc::SmartDashboard::PutNumber("Target size", results.size());
+    // joystick.RightBumper().WhileTrue(
+    //     drivetrain.ApplyRequest([this]() -> auto&& {
+    //         return drive.WithVelocityX(units::velocity::meters_per_second_t(0.0)) // Drive forward with negative Y (forward)
+    //             .WithVelocityY(units::velocity::meters_per_second_t(0.0)) // Drive left with negative X (left)
+    //             .WithRotationalRate(units::angular_velocity::radians_per_second_t(AimAtTarget().GetTurn() * MaxAngularRate));
+    //     })
+    // );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

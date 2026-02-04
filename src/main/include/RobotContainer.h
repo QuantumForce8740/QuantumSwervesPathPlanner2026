@@ -7,9 +7,11 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/CommandXboxController.h>
-#include "subsystems/CommandSwerveDrivetrain.h"
 #include "Telemetry.h"
 #include <photon/PhotonCamera.h>
+#include "subsystems/CommandSwerveDrivetrain.h"
+#include "subsystems/Vision.h"
+#include "commands/Vision/AimAtTarget.h"
 
 class RobotContainer {
 private:
@@ -31,11 +33,9 @@ private:
 
     frc2::CommandXboxController joystick{0};
 
-    photon::PhotonCamera camera{"camera0"};
-    static constexpr double VISION_TURN_kP = 0.01;
-
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
+    // Vision vision;
 
 private:
     /* Path follower */
