@@ -6,8 +6,13 @@
 
 #include <optional>
 
+#include <photonlib/PhotonCamera.h>
 #include <frc/TimedRobot.h>
+#include <frc/XboxController.h>
 #include <frc2/command/CommandPtr.h>
+#include <units/angle.h>
+#include <units/length.h>
+
 
 #include "RobotContainer.h"
 
