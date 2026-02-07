@@ -300,6 +300,9 @@ public:
         return _drivetrain.SamplePoseAt(utils::FPGAToCurrentTime(timestamp));
     }
 
+    void DriveRobotRelative(frc::ChassisSpeeds speeds);
+    void Stop();
+
 private:
     void ConfigureAutoBuilder();
     void StartSimThread();

@@ -3,14 +3,18 @@
 
 Vision::Vision() {}
 
-void Vision::Periodic(){
-    m_latest = m_camera.GetAllUnreadResults();
+void Vision::Periodic() {}
 
-    frc::SmartDashboard::PutBoolean("Has targets", m_latest.back().HasTargets());
-    frc::SmartDashboard::PutNumber("Unread Results", m_latest.size());
+std::optional<double> Vision::GetTargetYaw() {
+    auto result = m_camera.GetLatestResult();
 
-    if(m_latest.back().HasTargets()){
-        auto target = m_latest.back().GetBestTarget();
-        frc::SmartDashboard::PutNumber("Target Yaw", target.GetYaw());
-    }
+    if (!result.HasTargets())
+        return std::nullopt;
+
+    auto target = result.GetBestTarget();
+
+    if (target.GetPoseAmbiguity() > 0.2)
+        return std::nullopt;
+
+    return target.GetYaw(); // grados
 }

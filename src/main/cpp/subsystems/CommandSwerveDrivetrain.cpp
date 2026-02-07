@@ -76,3 +76,18 @@ void CommandSwerveDrivetrain::StartSimThread()
     });
     m_simNotifier->StartPeriodic(kSimLoopPeriod);
 }
+
+void CommandSwerveDrivetrain::DriveRobotRelative(frc::ChassisSpeeds speeds)
+{
+    SetControl(
+        m_pathApplyRobotSpeeds.WithSpeeds(
+            frc::ChassisSpeeds::Discretize(speeds, 20_ms)
+        )
+    );
+}
+
+void CommandSwerveDrivetrain::Stop()
+{
+    DriveRobotRelative(frc::ChassisSpeeds{0_mps, 0_mps, 0_rad_per_s});
+}
+

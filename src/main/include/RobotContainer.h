@@ -11,7 +11,7 @@
 #include <photon/PhotonCamera.h>
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "subsystems/Vision.h"
-#include "commands/Vision/AimAtTarget.h"
+#include "commands/Vision/AlignToTarget.h"
 
 class RobotContainer {
 private:
@@ -32,6 +32,9 @@ private:
     Telemetry logger{MaxSpeed};
 
     frc2::CommandXboxController joystick{0};
+
+    Vision vision;
+    AlignToTarget alignToTarget{&drivetrain, &vision};
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
