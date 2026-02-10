@@ -13,8 +13,6 @@ class Vision : public frc2::SubsystemBase {
 
         std::optional<double> GetTargetYaw();
 
-        double GetTargetSize(); 
-
         bool HasTarget();
     
     private: 

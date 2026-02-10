@@ -13,6 +13,7 @@ RobotContainer::RobotContainer()
 {
     autoChooser = pathplanner::AutoBuilder::buildAutoChooser("Tests");
     frc::SmartDashboard::PutData("Auto Mode", &autoChooser);
+    alignPID.SetTolerance(1.5);
 
     ConfigureBindings();
 }
@@ -21,12 +22,50 @@ void RobotContainer::ConfigureBindings()
 {
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
+    // drivetrain.SetDefaultCommand(
+    //     // Drivetrain will execute this command periodically
+    //     drivetrain.ApplyRequest([this]() -> auto&& {
+    //         return drive.WithVelocityX(-joystick.GetLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+    //             .WithVelocityY(-joystick.GetLeftX() * MaxSpeed) // Drive left with negative X (left)
+    //             .WithRotationalRate(-joystick.GetRightX() * MaxAngularRate); // Drive counterclockwise with negative X (left)
+    //     })
+    // );
+    
     drivetrain.SetDefaultCommand(
         // Drivetrain will execute this command periodically
         drivetrain.ApplyRequest([this]() -> auto&& {
-            return drive.WithVelocityX(-joystick.GetLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                .WithVelocityY(-joystick.GetLeftX() * MaxSpeed) // Drive left with negative X (left)
-                .WithRotationalRate(-joystick.GetRightX() * MaxAngularRate); // Drive counterclockwise with negative X (left)
+            units::velocity::meters_per_second_t x = -joystick.GetLeftY() * MaxSpeed * 0.5;
+            units::velocity::meters_per_second_t y = -joystick.GetLeftX() * MaxSpeed * 0.5;
+            units::angular_velocity::radians_per_second_t rot = -joystick.GetRightX() * MaxAngularRate;
+
+            bool alignPressed = joystick.RightBumper().Get();
+
+            if (alignPressed && vision.HasTarget())
+            {
+                auto yawOpt = vision.GetTargetYaw();
+
+                if (yawOpt.has_value())
+                {
+                    double yaw = yawOpt.value();
+
+                    double pidOutput = alignPID.Calculate(yaw, 0);
+
+                    // limitar para evitar spin loco
+                    pidOutput = std::clamp(pidOutput, -1.0, 1.0);
+
+                    rot = units::radians_per_second_t{
+                        pidOutput * MaxAngularRate.value()
+                    };
+                }
+            }
+            else
+            {
+                alignPID.Reset();
+            }
+
+            return drive.WithVelocityX(x)
+                .WithVelocityY(y)
+                .WithRotationalRate(rot);
         })
     );
 
@@ -66,7 +105,7 @@ void RobotContainer::ConfigureBindings()
 
     drivetrain.RegisterTelemetry([this](auto const &state) { logger.Telemeterize(state); });
 
-    joystick.RightBumper().WhileTrue(&alignToTarget);
+    // joystick.RightBumper().WhileTrue(&alignToTarget);
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

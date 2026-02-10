@@ -51,4 +51,5 @@ public:
 
 private:
     void ConfigureBindings();
+    frc::PIDController alignPID{0.03, 0.0, 0.0008};
 };

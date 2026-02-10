@@ -18,3 +18,8 @@ std::optional<double> Vision::GetTargetYaw() {
 
     return target.GetYaw(); // grados
 }
+
+bool Vision::HasTarget()
+{
+    return m_camera.GetLatestResult().HasTargets();
+}
