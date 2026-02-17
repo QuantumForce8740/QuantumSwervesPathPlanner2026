@@ -7,10 +7,12 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/CommandXboxController.h>
+#include <frc2/command/StartEndCommand.h>
 #include "Telemetry.h"
 #include <photon/PhotonCamera.h>
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "subsystems/Vision.h"
+#include "subsystems/Feeder.h"
 #include "commands/Vision/AlignToTarget.h"
 
 class RobotContainer {
@@ -35,6 +37,8 @@ private:
 
     Vision vision;
     AlignToTarget alignToTarget{&drivetrain, &vision};
+
+    Feeder feeder;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
