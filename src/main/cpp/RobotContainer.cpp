@@ -106,6 +106,22 @@ void RobotContainer::ConfigureBindings()
     drivetrain.RegisterTelemetry([this](auto const &state) { logger.Telemeterize(state); });
 
     // joystick.RightBumper().WhileTrue(&alignToTarget);
+
+    joystick.B().WhileTrue(
+    frc2::StartEndCommand(
+        [&] { columns.RunForward(); },   // Cuando presionas
+        [&] { columns.Stop(); },         // Cuando sueltas
+        {&columns}
+        ).ToPtr()
+    );
+
+    joystick.X().WhileTrue(
+    frc2::StartEndCommand(
+        [&] { columns.RunReverse(); },
+        [&] { columns.Stop(); },
+        {&columns}
+        ).ToPtr()
+    );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
