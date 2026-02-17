@@ -11,7 +11,9 @@
 #include <photon/PhotonCamera.h>
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "subsystems/Vision.h"
+#include "subsystems/Hood.h"
 #include "commands/Vision/AlignToTarget.h"
+#include "commands/Hood/SetHoodAtAngle.h"
 
 class RobotContainer {
 private:
@@ -35,6 +37,8 @@ private:
 
     Vision vision;
     AlignToTarget alignToTarget{&drivetrain, &vision};
+
+    Hood hood;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
