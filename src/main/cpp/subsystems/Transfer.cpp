@@ -1,8 +1,8 @@
-#include "subsystems/Feeder.h"
+#include "subsystems/Transfer.h"
 
 using namespace rev::spark;
 
-Feeder::Feeder()
+Transfer::Transfer()
     : m_motor(kMotorID, SparkMax::MotorType::kBrushless)
 {
     SparkMaxConfig config;
@@ -19,17 +19,17 @@ Feeder::Feeder()
     );
 }
 
-void Feeder::RunForward()
+void Transfer::RunForward()
 {
     m_motor.Set(kForwardSpeed);
 }
 
-void Feeder::RunReverse()
+void Transfer::RunReverse()
 {
     m_motor.Set(kReverseSpeed);
 }
 
-void Feeder::Stop()
+void Transfer::Stop()
 {
     m_motor.Set(0.0);
 }

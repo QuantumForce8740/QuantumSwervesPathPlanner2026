@@ -6,16 +6,16 @@
 
 using namespace rev::spark;
 
-class Feeder : public frc2::SubsystemBase {
+class Transfer : public frc2::SubsystemBase {
 public:
-    Feeder();
+    Transfer();
 
     void RunForward();     // Llevar fuel hacia shooter
     void RunReverse();     // Regresar fuel (desatascar)
     void Stop();
 
 private:
-    static constexpr int kMotorID = 20;
+    static constexpr int kMotorID = 24; // Cambiar al verdadero
     static constexpr double kForwardSpeed = 0.7;
     static constexpr double kReverseSpeed = -0.5;
 

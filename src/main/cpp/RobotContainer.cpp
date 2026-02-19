@@ -107,19 +107,19 @@ void RobotContainer::ConfigureBindings()
 
     // joystick.RightBumper().WhileTrue(&alignToTarget);
 
-    joystick.X().WhileTrue(
+    joystick.A().WhileTrue(
     frc2::StartEndCommand(
-        [&] { feeder.RunForward(); },  // Cuando presionas
-        [&] { feeder.Stop(); },        // Cuando sueltas
-        {&feeder}
+        [&] { transfer.RunForward(); },  // Cuando presionas
+        [&] { transfer.Stop(); },        // Cuando sueltas
+        {&transfer}
         ).ToPtr()
     );
 
-    joystick.Y().WhileTrue(
+    joystick.B().WhileTrue(
     frc2::StartEndCommand(
-        [&] { feeder.RunReverse(); },
-        [&] { feeder.Stop(); },
-        {&feeder}
+        [&] { transfer.RunReverse(); },
+        [&] { transfer.Stop(); },
+        {&transfer}
         ).ToPtr()
     );
 }
