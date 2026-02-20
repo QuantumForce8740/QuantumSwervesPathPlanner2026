@@ -8,10 +8,12 @@
 #include <frc2/command/Commands.h>
 #include <frc2/command/button/RobotModeTriggers.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/auto/NamedCommands.h>
 
 RobotContainer::RobotContainer()
 {
-    autoChooser = pathplanner::AutoBuilder::buildAutoChooser("Tests");
+    pathplanner::NamedCommands::registerCommand("AlignToTarget", AlignToTarget(&drivetrain, &vision).ToPtr().WithTimeout(2_s));
+    autoChooser = pathplanner::AutoBuilder::buildAutoChooser("RedCenter");
     frc::SmartDashboard::PutData("Auto Mode", &autoChooser);
     alignPID.SetTolerance(1.5);
 
