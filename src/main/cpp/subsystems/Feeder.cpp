@@ -1,9 +1,9 @@
-#include "subsystems/Columns.h"
+#include "subsystems/Feeder.h"
 
 using namespace rev;
 using namespace rev::spark;
 
-Columns::Columns()
+Feeder::Feeder()
     : m_motor(kMotorID, SparkMax::MotorType::kBrushless)
 {
     SparkMaxConfig config;
@@ -20,17 +20,17 @@ Columns::Columns()
     );
 }
 
-void Columns::RunForward()
+void Feeder::RunForward()
 {
     m_motor.Set(kForwardSpeed);
 }
 
-void Columns::RunReverse()
+void Feeder::RunReverse()
 {
     m_motor.Set(kReverseSpeed);
 }
 
-void Columns::Stop()
+void Feeder::Stop()
 {
     m_motor.Set(0.0);
 }

@@ -12,7 +12,7 @@
 #include <photon/PhotonCamera.h>
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "subsystems/Vision.h"
-#include "subsystems/Columns.h"
+#include "subsystems/Feeder.h"
 #include "commands/Vision/AlignToTarget.h"
 
 class RobotContainer {
@@ -38,7 +38,7 @@ private:
     Vision vision;
     AlignToTarget alignToTarget{&drivetrain, &vision};
 
-    Columns columns;
+    Feeder feeder;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
