@@ -14,7 +14,9 @@
 #include "subsystems/Vision.h"
 #include "subsystems/Transfer.h"
 #include "subsystems/Feeder.h"
+#include "subsystems/Hood.h"
 #include "commands/Vision/AlignToTarget.h"
+#include "commands/Hood/SetHoodAtAngle.h"
 
 class RobotContainer {
 private:
@@ -41,6 +43,7 @@ private:
 
     Transfer transfer;
     Feeder feeder;
+    Hood hood;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};

@@ -15,6 +15,8 @@ RobotContainer::RobotContainer()
     frc::SmartDashboard::PutData("Auto Mode", &autoChooser);
     alignPID.SetTolerance(1.5);
 
+    frc::SmartDashboard::PutNumber("Hood Angle", hood.GetPositionDegrees());
+
     ConfigureBindings();
 }
 
@@ -138,6 +140,9 @@ void RobotContainer::ConfigureBindings()
         {&feeder}
         ).ToPtr()
     );
+    joystick.A().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
+
+    joystick.B().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
