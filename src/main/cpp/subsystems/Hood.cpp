@@ -17,7 +17,7 @@ Hood::Hood()
 
     // PID para posición
     config.closedLoop
-        .P(0.8)   // ⚠️ Ajustar en práctica
+        .P(0.8)   // Ajustar en práctica
         .I(0.0)
         .D(0.0)
         .OutputRange(-0.5, 0.5);

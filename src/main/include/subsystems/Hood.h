@@ -23,7 +23,7 @@ public:
     void SetAngleFromDistance(double distanceMeters);
 
 private:
-    static constexpr int kMotorID = 30;
+    static constexpr int kMotorID = 22; // Cambiar al verdadero
 
     // Conversión (ajustar según tu relación mecánica)
     static constexpr double kGearRatio = 1.0;          // cambiar si hay reducción

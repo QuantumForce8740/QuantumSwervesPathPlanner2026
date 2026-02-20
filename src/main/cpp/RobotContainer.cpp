@@ -109,7 +109,9 @@ void RobotContainer::ConfigureBindings()
 
     // joystick.RightBumper().WhileTrue(&alignToTarget);
 
-    joystick.A().OnTrue(SetHoodAtAngle(&hood, 25.0).ToPtr());
+    joystick.A().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
+
+    joystick.B().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
