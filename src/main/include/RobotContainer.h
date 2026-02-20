@@ -13,6 +13,7 @@
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "subsystems/Vision.h"
 #include "subsystems/Transfer.h"
+#include "subsystems/Feeder.h"
 #include "commands/Vision/AlignToTarget.h"
 
 class RobotContainer {
@@ -39,6 +40,7 @@ private:
     AlignToTarget alignToTarget{&drivetrain, &vision};
 
     Transfer transfer;
+    Feeder feeder;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
