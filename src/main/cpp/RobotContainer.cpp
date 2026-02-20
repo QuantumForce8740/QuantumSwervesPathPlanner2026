@@ -106,6 +106,48 @@ void RobotContainer::ConfigureBindings()
     drivetrain.RegisterTelemetry([this](auto const &state) { logger.Telemeterize(state); });
 
     // joystick.RightBumper().WhileTrue(&alignToTarget);
+
+    // A → Deploy intake
+    joystick.A().OnTrue(
+        frc2::cmd::RunOnce(
+            [this] { intake.Deploy(); },
+            {&intake}
+        )
+    );
+
+    // B → Retract intake
+    joystick.B().OnTrue(
+        frc2::cmd::RunOnce(
+            [this] { intake.Retract(); },
+            {&intake}
+        )
+    );
+
+    // Right Trigger → Intake In (mientras se presiona)
+    joystick.RightTrigger().WhileTrue(
+        frc2::cmd::Run(
+            [this] { intake.IntakeIn(); },
+            {&intake}
+        )
+    ).OnFalse(
+        frc2::cmd::RunOnce(
+            [this] { intake.StopRollers(); },
+            {&intake}
+        )
+    );
+
+    // Left Trigger → Intake Out
+    joystick.LeftTrigger().WhileTrue(
+        frc2::cmd::Run(
+            [this] { intake.IntakeOut(); },
+            {&intake}
+        )
+    ).OnFalse(
+        frc2::cmd::RunOnce(
+            [this] { intake.StopRollers(); },
+            {&intake}
+        )
+    );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
