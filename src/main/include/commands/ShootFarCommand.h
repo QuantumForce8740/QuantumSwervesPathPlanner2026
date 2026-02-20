@@ -1,13 +1,13 @@
 #pragma once
 
-#include <frc2/command/CommandHelper.h>
 #include <frc2/command/Command.h>
+#include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSubsystem.h"
 
-class ShootCommand
-  : public frc2::CommandHelper<frc2::Command, ShootCommand> {
+class ShootFarCommand
+: public frc2::CommandHelper<frc2::Command, ShootFarCommand> {
  public:
-  ShootCommand(ShooterSubsystem* shooter, double rpm);
+  explicit ShootFarCommand(ShooterSubsystem* shooter);
 
   void Initialize() override;
   void End(bool interrupted) override;
@@ -15,5 +15,5 @@ class ShootCommand
 
  private:
   ShooterSubsystem* m_shooter;
-  double m_rpm;
+
 };

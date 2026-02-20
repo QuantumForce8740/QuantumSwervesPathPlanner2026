@@ -6,9 +6,9 @@
 using namespace rev::spark;
 
 ShooterSubsystem::ShooterSubsystem() :
-    m_motor1(20, SparkMax::MotorType::kBrushless),
-    m_motor2(21, SparkMax::MotorType::kBrushless),
-    m_motor3(22, SparkMax::MotorType::kBrushless),
+    m_motor1(kMotorID, SparkMax::MotorType::kBrushless),
+    m_motor2(kMotorID2, SparkMax::MotorType::kBrushless),
+    m_motor3(kMotorID3, SparkMax::MotorType::kBrushless),
     //m_closedLoop1(m_motor1.GetClosedLoopController()),
     //m_closedLoop2(m_motor2.GetClosedLoopController()),
     //m_closedLoop3(m_motor3.GetClosedLoopController()),
@@ -24,7 +24,7 @@ ShooterSubsystem::ShooterSubsystem() :
 {
     SparkMaxConfig config;
     config.Inverted(false)
-          .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
+          .SetIdleMode(SparkMaxConfig::IdleMode::kCoast)
           .SmartCurrentLimit(50);
 
     //PID position control 
@@ -55,24 +55,38 @@ rev::PersistMode::kPersistParameters
 
 }
 
-void ShooterSubsystem::SetRPM(double rpm) {
-    m_targetRPM = rpm;
-    m_PID1.SetReference(rpm, rev::spark::SparkMax::ControlType::kVelocity);
-    m_PID2.SetReference(rpm, rev::spark::SparkMax::ControlType::kVelocity);
-    m_PID3.SetReference(rpm, rev::spark::SparkMax::ControlType::kVelocity);
+void ShooterSubsystem::ShootNear(){
+    m_targetRPM = kForwardSpeedNear;
+    m_mode = ShooterMode::kNear; 
+    m_PID1.SetReference(m_targetRPM, rev::spark::SparkMax::ControlType::kVelocity);
+    m_PID2.SetReference(m_targetRPM, rev::spark::SparkMax::ControlType::kVelocity);
+    m_PID3.SetReference(m_targetRPM, rev::spark::SparkMax::ControlType::kVelocity);
+}
+
+void ShooterSubsystem::ShootFar(){
+    m_targetRPM = kForwardSpeedFar;
+    m_mode = ShooterMode::kFar; 
+    m_PID1.SetReference(m_targetRPM, rev::spark::SparkMax::ControlType::kVelocity);
+    m_PID2.SetReference(m_targetRPM, rev::spark::SparkMax::ControlType::kVelocity);
+    m_PID3.SetReference(m_targetRPM, rev::spark::SparkMax::ControlType::kVelocity);
 }
 
 void ShooterSubsystem::Stop() {
-    SetRPM(0);
+    m_mode = ShooterMode::kStopped;
+    m_PID1.SetReference(kStopShooter, rev::spark::SparkMax::ControlType::kVelocity);
+    m_PID2.SetReference(kStopShooter, rev::spark::SparkMax::ControlType::kVelocity);
+    m_PID3.SetReference(kStopShooter, rev::spark::SparkMax::ControlType::kVelocity);
 }
 // body: configure inversion, PID values, etc.
 bool ShooterSubsystem::AtSetpoint() {
     return
-        fabs(m_encoder1.GetVelocity() - m_targetRPM) < 100 &&
-        fabs(m_encoder2.GetVelocity() - m_targetRPM) < 100 &&
-        fabs(m_encoder3.GetVelocity() - m_targetRPM) < 100;
+        fabs(m_encoder1.GetVelocity() - m_targetRPM) < kToleranceRPM &&
+        fabs(m_encoder2.GetVelocity() - m_targetRPM) < kToleranceRPM &&
+        fabs(m_encoder3.GetVelocity() - m_targetRPM) < kToleranceRPM;
 }
 
 double ShooterSubsystem::getRPM() {
-    return (m_encoder1.GetVelocity() + m_encoder2.GetVelocity() + m_encoder3.GetVelocity()) / 3.0;
+    return (m_encoder1.GetVelocity()
+          + m_encoder2.GetVelocity() 
+          + m_encoder3.GetVelocity()) / 3.0;
 }
