@@ -1,7 +1,10 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
+#include <rev/SparkMax.h>
+#include <rev/config/SparkMaxConfig.h>
+
+using namespace rev::spark;
 
 class IntakeSubsystem : public frc2::SubsystemBase {
 public:
@@ -15,6 +18,10 @@ public:
     void StopRollers();
 
 private:
-    rev::CANSparkMax m_rollerMotor;
-    rev::CANSparkMax m_deployMotor;
+
+    static constexpr int kRollerMotorID = 23; // Cambiar al verdadero
+    static constexpr int kDeployMotorID = 24; // Cambiar al verdadero
+
+    SparkMax m_rollerMotor;
+    SparkMax m_deployMotor;
 };

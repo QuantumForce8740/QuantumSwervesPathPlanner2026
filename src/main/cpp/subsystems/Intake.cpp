@@ -1,10 +1,30 @@
-#include "Intake.h" 
-#include <rev/CANSparkMax.h>
+#include "subsystems/Intake.h" 
+
+using namespace rev::spark;
 
 IntakeSubsystem::IntakeSubsystem() :
-    m_rollerMotor(10, rev::spark::SparkLowLevel::MotorType::kBrushless),
-    m_deployMotor(11, rev::spark::SparkLowLevel::MotorType::kBrushless)
-{}
+    m_rollerMotor(kRollerMotorID, rev::spark::SparkLowLevel::MotorType::kBrushless),
+    m_deployMotor(kDeployMotorID, rev::spark::SparkLowLevel::MotorType::kBrushless)
+{
+    SparkMaxConfig config;
+
+    config
+        .Inverted(false) // Cambiar si gira al revés
+        .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
+        .SmartCurrentLimit(50);
+
+    m_rollerMotor.Configure(
+        config,
+        rev::ResetMode::kResetSafeParameters,
+        rev::PersistMode::kPersistParameters
+    );
+
+    m_deployMotor.Configure(
+        config,
+        rev::ResetMode::kResetSafeParameters,
+        rev::PersistMode::kPersistParameters
+    );
+}
 
 void IntakeSubsystem::Deploy() {
     m_deployMotor.Set(0.4);
