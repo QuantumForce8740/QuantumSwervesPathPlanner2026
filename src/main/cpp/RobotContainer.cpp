@@ -144,48 +144,48 @@ void RobotContainer::ConfigureBindings()
     joystick.LeftTrigger().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
 
     joystick.RightTrigger().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
-    
-    // A → Deploy intake
-    joystick.POVUp().OnTrue(
-        frc2::cmd::RunOnce(
-            [this] { intake.Deploy(); },
-            {&intake}
-        )
-    );
 
-    // B → Retract intake
-    joystick.POVDown().OnTrue(
-        frc2::cmd::RunOnce(
-            [this] { intake.Retract(); },
-            {&intake}
-        )
-    );
+    // // A → Deploy intake
+    // joystick.POVUp().OnTrue(
+    //     frc2::cmd::RunOnce(
+    //         [this] { intake.Deploy(); },
+    //         {&intake}
+    //     )
+    // );
 
-    // Right Trigger → Intake In (mientras se presiona)
-    joystick.POVRight().WhileTrue(
-        frc2::cmd::Run(
-            [this] { intake.IntakeIn(); },
-            {&intake}
-        )
-    ).OnFalse(
-        frc2::cmd::RunOnce(
-            [this] { intake.StopRollers(); },
-            {&intake}
-        )
-    );
+    // // B → Retract intake
+    // joystick.POVDown().OnTrue(
+    //     frc2::cmd::RunOnce(
+    //         [this] { intake.Retract(); },
+    //         {&intake}
+    //     )
+    // );
 
-    // Left Trigger → Intake Out
-    joystick.POVLeft().WhileTrue(
-        frc2::cmd::Run(
-            [this] { intake.IntakeOut(); },
-            {&intake}
-        )
-    ).OnFalse(
-        frc2::cmd::RunOnce(
-            [this] { intake.StopRollers(); },
-            {&intake}
-        )
-    );
+    // // Right Trigger → Intake In (mientras se presiona)
+    // joystick.POVRight().WhileTrue(
+    //     frc2::cmd::Run(
+    //         [this] { intake.IntakeIn(); },
+    //         {&intake}
+    //     )
+    // ).OnFalse(
+    //     frc2::cmd::RunOnce(
+    //         [this] { intake.StopRollers(); },
+    //         {&intake}
+    //     )
+    // );
+
+    // // Left Trigger → Intake Out
+    // joystick.POVLeft().WhileTrue(
+    //     frc2::cmd::Run(
+    //         [this] { intake.IntakeOut(); },
+    //         {&intake}
+    //     )
+    // ).OnFalse(
+    //     frc2::cmd::RunOnce(
+    //         [this] { intake.StopRollers(); },
+    //         {&intake}
+    //     )
+    // );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

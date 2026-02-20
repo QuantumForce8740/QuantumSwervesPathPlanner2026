@@ -45,7 +45,7 @@ private:
     Transfer transfer;
     Feeder feeder;
     Hood hood;
-    Intake intake;
+    // Intake intake;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
