@@ -82,16 +82,16 @@ void RobotContainer::ConfigureBindings()
     //     return point.WithModuleDirection(frc::Rotation2d{-joystick.GetLeftY(), -joystick.GetLeftX()});
     // }));
 
-    joystick.POVUp().WhileTrue(
-        drivetrain.ApplyRequest([this]() -> auto&& {
-            return forwardStraight.WithVelocityX(0.5_mps).WithVelocityY(0_mps);
-        })
-    );
-    joystick.POVDown().WhileTrue(
-        drivetrain.ApplyRequest([this]() -> auto&& {
-            return forwardStraight.WithVelocityX(-0.5_mps).WithVelocityY(0_mps);
-        })
-    );
+    // joystick.POVUp().WhileTrue(
+    //     drivetrain.ApplyRequest([this]() -> auto&& {
+    //         return forwardStraight.WithVelocityX(0.5_mps).WithVelocityY(0_mps);
+    //     })
+    // );
+    // joystick.POVDown().WhileTrue(
+    //     drivetrain.ApplyRequest([this]() -> auto&& {
+    //         return forwardStraight.WithVelocityX(-0.5_mps).WithVelocityY(0_mps);
+    //     })
+    // );
 
     // Run SysId routines when holding back/start and X/Y.
     // Note that each routine should be run exactly once in a single log.
@@ -108,7 +108,7 @@ void RobotContainer::ConfigureBindings()
     // joystick.RightBumper().WhileTrue(&alignToTarget);
 
     // A → Deploy intake
-    joystick.A().OnTrue(
+    joystick.POVUp().OnTrue(
         frc2::cmd::RunOnce(
             [this] { intake.Deploy(); },
             {&intake}
@@ -116,7 +116,7 @@ void RobotContainer::ConfigureBindings()
     );
 
     // B → Retract intake
-    joystick.B().OnTrue(
+    joystick.POVDown().OnTrue(
         frc2::cmd::RunOnce(
             [this] { intake.Retract(); },
             {&intake}
@@ -124,7 +124,7 @@ void RobotContainer::ConfigureBindings()
     );
 
     // Right Trigger → Intake In (mientras se presiona)
-    joystick.RightTrigger().WhileTrue(
+    joystick.POVRight().WhileTrue(
         frc2::cmd::Run(
             [this] { intake.IntakeIn(); },
             {&intake}
@@ -137,7 +137,7 @@ void RobotContainer::ConfigureBindings()
     );
 
     // Left Trigger → Intake Out
-    joystick.LeftTrigger().WhileTrue(
+    joystick.POVLeft().WhileTrue(
         frc2::cmd::Run(
             [this] { intake.IntakeOut(); },
             {&intake}
