@@ -140,9 +140,10 @@ void RobotContainer::ConfigureBindings()
         {&feeder}
         ).ToPtr()
     );
-    joystick.A().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
+    
+    joystick.LeftTrigger().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
 
-    joystick.B().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
+    joystick.RightTrigger().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
