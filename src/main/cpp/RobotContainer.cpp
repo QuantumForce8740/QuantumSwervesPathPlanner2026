@@ -2,9 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 #include "RobotContainer.h"
-#include "subsystems/shooterSubsystem.h"
-#include "commands/ShootNearCommand.h"
-#include "commands/ShootFarCommand.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/Commands.h>
 #include <frc2/command/button/RobotModeTriggers.h>
@@ -20,12 +17,6 @@ RobotContainer::RobotContainer()
 }
 
 void RobotContainer::ConfigureBindings(){
-
-    joystick.A().ToggleOnTrue(ShootNearCommand(&m_shooter).ToPtr());
-    joystick.B().ToggleOnTrue(ShootFarCommand(&m_shooter).ToPtr());
-    //joystick.X().ToggleOnTrue(StopShootCommand(&m_shooter).ToPtr());
-   
-      
 
     drivetrain.SetDefaultCommand(
         drivetrain.ApplyRequest([this]() -> auto&& {
@@ -88,6 +79,13 @@ void RobotContainer::ConfigureBindings(){
             logger.Telemeterize(state);
         }
     );
+
+    joystick.X().OnTrue(
+    frc2::cmd::RunOnce(
+        [this] { shooter.SetRPM(3500); },
+        {&shooter}
+    )
+);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand()

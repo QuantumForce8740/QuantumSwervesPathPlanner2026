@@ -9,12 +9,7 @@
 #include <frc2/command/button/CommandXboxController.h>
 #include "subsystems/CommandSwerveDrivetrain.h"
 #include "Telemetry.h"
-#include "subsystems/ShooterSubsystem.h"    
-
-//commands 
-#include "commands/ShootNearCommand.h"
-#include "commands/ShootFarCommand.h"
-
+#include "subsystems/Shooter.h"
 
 
 class RobotContainer {
@@ -37,6 +32,8 @@ private:
 
     frc2::CommandXboxController joystick{0};
 
+    Shooter shooter;
+
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
 
@@ -51,7 +48,4 @@ public:
 
 private:
     void ConfigureBindings();
-
-    ShooterSubsystem m_shooter;
-
 };
