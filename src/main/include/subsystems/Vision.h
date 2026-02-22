@@ -12,6 +12,7 @@ class Vision : public frc2::SubsystemBase {
         void Periodic() override;
 
         std::optional<double> GetTargetYaw();
+        std::optional<double> GetDistanceToTarget();
 
         bool HasTarget();
     
