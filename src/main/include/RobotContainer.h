@@ -18,6 +18,8 @@
 #include "subsystems/Intake.h"
 #include "commands/Vision/AlignToTarget.h"
 #include "commands/Hood/SetHoodAtAngle.h"
+#include "commands/AimCommand.h"
+#include "commands/ShootCommand.h"
 
 class RobotContainer {
 private:

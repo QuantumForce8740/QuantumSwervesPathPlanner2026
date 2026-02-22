@@ -188,6 +188,14 @@ void RobotContainer::ConfigureBindings()
     //         {&intake}
     //     )
     // );
+
+    // joystick.LeftBumper().WhileTrue(
+    //     AimCommand(&vision, &shooter, &hood, &drivetrain)
+    // );
+
+    // joystick.RightBumper().WhileTrue(
+    //     ShootCommand(&shooter, &transfer, &feeder)
+    // );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
