@@ -4,10 +4,13 @@
 
 #include "RobotContainer.h"
 
+#include "subsystems/Climber.h"
+
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/Commands.h>
 #include <frc2/command/button/RobotModeTriggers.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
+
 
 RobotContainer::RobotContainer()
 {
@@ -16,10 +19,27 @@ RobotContainer::RobotContainer()
     alignPID.SetTolerance(1.5);
 
     ConfigureBindings();
+
+    m_climber.SetDefaultCommand(
+    frc2::cmd::Run(
+        [this] { m_climber.Stop(); },
+        {&m_climber}
+    )
+);
+
 }
 
 void RobotContainer::ConfigureBindings()
 {
+
+    joystick.A().WhileTrue(
+        frc2::cmd::Run(
+            [this] { m_climber.ClimbUp(); },
+            {&m_climber}
+        )
+
+    );
+
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
     // drivetrain.SetDefaultCommand(

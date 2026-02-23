@@ -13,6 +13,8 @@
 #include "subsystems/Vision.h"
 #include "commands/Vision/AlignToTarget.h"
 
+#include "subsystems/Climber.h"
+
 class RobotContainer {
 private:
     units::meters_per_second_t MaxSpeed = 1.0 * TunerConstants::kSpeedAt12Volts; // kSpeedAt12Volts desired top speed
@@ -52,4 +54,7 @@ public:
 private:
     void ConfigureBindings();
     frc::PIDController alignPID{0.03, 0.0, 0.0008};
+
+    ClimberSubsystem m_climber;
+    
 };
