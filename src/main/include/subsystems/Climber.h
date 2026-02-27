@@ -16,7 +16,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   void Stop();
 
  private:
-  SparkMax m_motor1;
+  SparkMax m_motor1; //aca se crean los motores del climber 
   SparkMax m_motor2;
 
   static constexpr double kClimbSpeed = 0.8;

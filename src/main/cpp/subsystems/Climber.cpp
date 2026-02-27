@@ -7,7 +7,7 @@
 using namespace rev::spark;
 
 ClimberSubsystem::ClimberSubsystem()
-    : m_motor1(8, SparkMax::MotorType::kBrushless),
+    : m_motor1(8, SparkMax::MotorType::kBrushless),  // 8 y 9 ids
       m_motor2(9, SparkMax::MotorType::kBrushless) {
 
   // Invertir si físicamente lo necesita

@@ -31,7 +31,7 @@ RobotContainer::RobotContainer()
 
 void RobotContainer::ConfigureBindings()
 {
-
+    //este cachito se usa para que el climber suba
     joystick.A().WhileTrue(
         frc2::cmd::Run(
             [this] { m_climber.ClimbUp(); },
@@ -39,6 +39,8 @@ void RobotContainer::ConfigureBindings()
         )
 
     );
+    //hasta aquí (|v|)
+
 
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
