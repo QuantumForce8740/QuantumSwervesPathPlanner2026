@@ -85,7 +85,7 @@ void RobotContainer::ConfigureBindings(){
     joystick.X().OnTrue(
     frc2::cmd::RunOnce(
         [this] { 
-            shooter.SetRPM(1000); },
+            shooter.SetRPM(3000); },
         {&shooter}
     )
 );

@@ -16,8 +16,8 @@ Shooter::Shooter() :
 
     m_encoder1(m_motor1.GetEncoder()),
     m_encoder2(m_motor2.GetEncoder()),
-    m_encoder3(m_motor3.GetEncoder())
-    // Posiblemente util m_targetRPM(0.0)
+    m_encoder3(m_motor3.GetEncoder()),
+    m_targetRPM(0.0)
 
 {
     SparkMaxConfig config;
