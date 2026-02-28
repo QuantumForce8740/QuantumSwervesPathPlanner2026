@@ -17,8 +17,6 @@ RobotContainer::RobotContainer()
     frc::SmartDashboard::PutData("Auto Mode", &autoChooser);
     alignPID.SetTolerance(1.5);
 
-    frc::SmartDashboard::PutNumber("Hood Angle", hood.GetPositionDegrees());
-
     ConfigureBindings();
 }
 
@@ -196,6 +194,13 @@ void RobotContainer::ConfigureBindings()
     // joystick.RightBumper().WhileTrue(
     //     ShootCommand(&shooter, &transfer, &feeder)
     // );
+
+    joystick.X().OnTrue(
+    frc2::cmd::RunOnce(
+        [this] { shooter.SetRPM(3000); },
+        {&shooter}
+        )
+    );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

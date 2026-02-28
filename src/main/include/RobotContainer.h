@@ -16,6 +16,7 @@
 #include "subsystems/Feeder.h"
 #include "subsystems/Hood.h"
 #include "subsystems/Intake.h"
+#include "subsystems/Shooter.h"
 #include "commands/Vision/AlignToTarget.h"
 #include "commands/Hood/SetHoodAtAngle.h"
 #include "commands/AimCommand.h"
@@ -48,7 +49,8 @@ private:
     Transfer transfer;
     Feeder feeder;
     Hood hood;
-    // Intake intake;
+    Intake intake;
+    Shooter shooter;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
