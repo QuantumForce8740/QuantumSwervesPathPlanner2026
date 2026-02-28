@@ -46,11 +46,11 @@ private:
     Vision vision;
     AlignToTarget alignToTarget{&drivetrain, &vision};
 
-    Transfer transfer;
-    Feeder feeder;
-    Hood hood;
-    Intake intake;
-    Shooter shooter;
+    // Transfer transfer;
+    // Feeder feeder;
+    // Hood hood;
+    // Intake intake;
+    // Shooter shooter;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};

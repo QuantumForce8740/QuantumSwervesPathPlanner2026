@@ -36,9 +36,14 @@ void RobotContainer::ConfigureBindings()
     drivetrain.SetDefaultCommand(
         // Drivetrain will execute this command periodically
         drivetrain.ApplyRequest([this]() -> auto&& {
-            units::velocity::meters_per_second_t x = -joystick.GetLeftY() * MaxSpeed * 0.5;
-            units::velocity::meters_per_second_t y = -joystick.GetLeftX() * MaxSpeed * 0.5;
-            units::angular_velocity::radians_per_second_t rot = -joystick.GetRightX() * MaxAngularRate;
+
+            double slowMultiplier = joystick.GetLeftTriggerAxis() > 0.1 ? 0.4 : 1.0; // aqui dice que si el gatillo tiene una precion mayor de 0.1  "joystick.GetLeftTriggerAxis() > 0.1 ?"
+                                                                                    //entonces que "slowMultiplier" tenga un valor de .4  " 0.4 "
+                                                                                    // Si no se queda con el valor de 1  ": 1.0;"
+
+            units::velocity::meters_per_second_t x = -joystick.GetLeftY() * MaxSpeed * slowMultiplier;
+            units::velocity::meters_per_second_t y = -joystick.GetLeftX() * MaxSpeed * slowMultiplier;
+            units::angular_velocity::radians_per_second_t rot = -joystick.GetRightX() * MaxAngularRate * slowMultiplier;
 
             bool alignPressed = joystick.RightBumper().Get();
 
@@ -195,12 +200,12 @@ void RobotContainer::ConfigureBindings()
     //     ShootCommand(&shooter, &transfer, &feeder)
     // );
 
-    joystick.X().OnTrue(
-    frc2::cmd::RunOnce(
-        [this] { shooter.SetRPM(3000); },
-        {&shooter}
-        )
-    );
+    // joystick.X().OnTrue(
+    // frc2::cmd::RunOnce(
+    //     [this] { shooter.SetRPM(3000); },
+    //     {&shooter}
+    //     )
+    // );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()
