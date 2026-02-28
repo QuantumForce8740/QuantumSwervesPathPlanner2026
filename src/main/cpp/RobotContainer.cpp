@@ -80,9 +80,12 @@ void RobotContainer::ConfigureBindings(){
         }
     );
 
+    frc::SmartDashboard::PutNumber("Shooter RPM: ", shooter.GetRPM());
+
     joystick.X().OnTrue(
     frc2::cmd::RunOnce(
-        [this] { shooter.SetRPM(3500); },
+        [this] { 
+            shooter.SetRPM(1000); },
         {&shooter}
     )
 );

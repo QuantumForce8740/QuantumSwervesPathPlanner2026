@@ -27,10 +27,10 @@ Shooter::Shooter() :
 
     //PID position control 
     config.closedLoop
-    .P(0.0002)
+    .P(0.0001)
     .I(0.0)
     .D(0.0)
-    .VelocityFF(0.00018)//Cambiado por SetFF
+    .VelocityFF(0.001)//Cambiado por SetFF
     .OutputRange(-1.0, 1.0);
 
     m_motor1.Configure(

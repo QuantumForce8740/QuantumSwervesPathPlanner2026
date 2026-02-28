@@ -25,7 +25,7 @@ private:
   double m_targetRPM = 0.0;
 
   static constexpr int kMotorID = 20; 
-  static constexpr int kMotorID2 = 21;
+  static constexpr int kMotorID2 = 23;
   static constexpr int kMotorID3 = 24;
 
   static constexpr double kForwardSpeedNear = 3000.0;
