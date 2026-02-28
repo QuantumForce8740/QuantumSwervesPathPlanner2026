@@ -111,41 +111,41 @@ void RobotContainer::ConfigureBindings()
 
     // joystick.RightBumper().WhileTrue(&alignToTarget);
 
-    joystick.A().WhileTrue(
-    frc2::StartEndCommand(
-        [&] { transfer.RunForward(); },  // Cuando presionas
-        [&] { transfer.Stop(); },        // Cuando sueltas
-        {&transfer}
-        ).ToPtr()
-    );
+    // joystick1.A().WhileTrue(
+    // frc2::StartEndCommand(
+    //     [&] { transfer.RunForward(); },  // Cuando presionas
+    //     [&] { transfer.Stop(); },        // Cuando sueltas
+    //     {&transfer}
+    //     ).ToPtr()
+    // );
 
-    joystick.B().WhileTrue(
-    frc2::StartEndCommand(
-        [&] { transfer.RunReverse(); },
-        [&] { transfer.Stop(); },
-        {&transfer}
-        ).ToPtr()
-    );
+    // joystick1.B().WhileTrue(
+    // frc2::StartEndCommand(
+    //     [&] { transfer.RunReverse(); },
+    //     [&] { transfer.Stop(); },
+    //     {&transfer}
+    //     ).ToPtr()
+    // );
 
-    joystick.X().WhileTrue(
-    frc2::StartEndCommand(
-        [&] { feeder.RunForward(); },   // Cuando presionas
-        [&] { feeder.Stop(); },         // Cuando sueltas
-        {&feeder}
-        ).ToPtr()
-    );
+    // joystick1.X().WhileTrue(
+    // frc2::StartEndCommand(
+    //     [&] { feeder.RunForward(); },   // Cuando presionas
+    //     [&] { feeder.Stop(); },         // Cuando sueltas
+    //     {&feeder}
+    //     ).ToPtr()
+    // );
 
-    joystick.Y().WhileTrue(
-    frc2::StartEndCommand(
-        [&] { feeder.RunReverse(); },
-        [&] { feeder.Stop(); },
-        {&feeder}
-        ).ToPtr()
-    );
+    // joystick1.Y().WhileTrue(
+    // frc2::StartEndCommand(
+    //     [&] { feeder.RunReverse(); },
+    //     [&] { feeder.Stop(); },
+    //     {&feeder}
+    //     ).ToPtr()
+    // );
     
-    joystick.LeftTrigger().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
+    // joystick1.LeftTrigger().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
 
-    joystick.RightTrigger().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
+    // joystick1.RightTrigger().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
 
     // // A → Deploy intake
     // joystick.POVUp().OnTrue(

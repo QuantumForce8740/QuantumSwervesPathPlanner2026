@@ -17,5 +17,5 @@ class Vision : public frc2::SubsystemBase {
         bool HasTarget();
     
     private: 
-        photon::PhotonCamera m_camera{"Microsoft_LifeCam_HD-3000"};
+        photon::PhotonCamera m_camera{"camera0"};
 };

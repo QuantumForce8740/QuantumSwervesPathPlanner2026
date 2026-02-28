@@ -40,6 +40,7 @@ private:
     Telemetry logger{MaxSpeed};
 
     frc2::CommandXboxController joystick{0};
+    frc2::CommandXboxController joystick1{1};
 
     Vision vision;
     AlignToTarget alignToTarget{&drivetrain, &vision};
