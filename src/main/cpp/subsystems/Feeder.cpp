@@ -1,23 +1,19 @@
 #include "subsystems/Feeder.h"
 
-using namespace rev;
-using namespace rev::spark;
+using namespace ctre::phoenix6;
 
 Feeder::Feeder()
-    : m_motor(kMotorID, SparkMax::MotorType::kBrushless)
+    : m_motor(kMotorID)
 {
-    SparkMaxConfig config;
+    configs::TalonFXConfiguration config{};
 
-    config
-        .Inverted(false) // Cambiar si gira al revés
-        .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50);
+    config.MotorOutput.Inverted = signals::InvertedValue::Clockwise_Positive; // Cambiar si gira al revés
+    config.MotorOutput.NeutralMode = signals::NeutralModeValue::Brake;
 
-    m_motor.Configure(
-        config,
-        rev::ResetMode::kResetSafeParameters,
-        rev::PersistMode::kPersistParameters
-    );
+    config.CurrentLimits.SupplyCurrentLimit = 50_A; //qie significa A 
+    config.CurrentLimits.SupplyCurrentLimitEnable = true; 
+     
+    m_motor.GetConfigurator().Apply(config);
 }
 
 void Feeder::RunForward()
