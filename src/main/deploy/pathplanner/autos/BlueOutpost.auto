@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueRightBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueGoOutpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueBackOutpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueShootOutpost"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

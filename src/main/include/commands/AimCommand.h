@@ -4,7 +4,7 @@
 #include <frc2/command/Command.h>
 #include <frc/controller/PIDController.h>
 #include "subsystems/Vision.h"
-// #include "subsystems/Shooter.h"
+#include "subsystems/Shooter.h"
 #include "subsystems/Hood.h"
 #include "subsystems/CommandSwerveDrivetrain.h"
 
@@ -14,9 +14,8 @@ class AimCommand
 public:
     AimCommand(
         Vision* vision,
-        // Shooter* shooter,
-        Hood* hood,
-        subsystems::CommandSwerveDrivetrain* drive);
+        Shooter* shooter,
+        Hood* hood);
 
     void Initialize() override;
     void Execute() override;
@@ -24,8 +23,6 @@ public:
 
 private:
     Vision* m_vision;
-    // Shooter* m_shooter;
+    Shooter* m_shooter;
     Hood* m_hood;
-    subsystems::CommandSwerveDrivetrain* m_drive;
-    frc::PIDController m_turnPID{0.08, 0.0, 0.0008};
 };

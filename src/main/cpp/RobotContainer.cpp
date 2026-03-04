@@ -50,19 +50,26 @@ void RobotContainer::ConfigureBindings()
             if (alignPressed && vision.HasTarget())
             {
                 auto yawOpt = vision.GetTargetYaw();
+                auto distanceOpt = vision.GetDistanceToTarget();
 
                 if (yawOpt.has_value())
                 {
                     double yaw = yawOpt.value();
+                    double distance = distanceOpt.value();
 
+                    // 1. Rotación automática
                     double pidOutput = alignPID.Calculate(yaw, 0);
-
-                    // limitar para evitar spin loco
                     pidOutput = std::clamp(pidOutput, -1.0, 1.0);
 
                     rot = units::radians_per_second_t{
                         pidOutput * MaxAngularRate.value()
                     };
+
+                    // 2. Ajustar shooter automáticamente
+                    // shooter.ShootAuto(distance);
+
+                    // 3. Ajustar hood automáticamente
+                    // hood.SetAngleFromDistance(distance);
                 }
             }
             else
