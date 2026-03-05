@@ -26,7 +26,7 @@ private:
     static constexpr int kMotorID = 20; // Cambiar al verdadero
 
     // Conversión (ajustar según tu relación mecánica)
-    static constexpr double kGearRatio = 1.0;          // cambiar si hay reducción
+    static constexpr double kGearRatio = 50.0;          // cambiar si hay reducción
     static constexpr double kDegreesPerRotation = 360.0 / kGearRatio;
 
     SparkMax m_motor;

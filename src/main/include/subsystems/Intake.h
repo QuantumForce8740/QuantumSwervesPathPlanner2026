@@ -33,7 +33,7 @@ private:
     SparkClosedLoopController m_deployClosedLoop;
     SparkRelativeEncoder m_deployEncoder;
 
-    static constexpr double kGearRatio = 1.0;
+    static constexpr double kGearRatio = 50.0;
 
     static constexpr double kDeployAngle = 90.0;   // grados
     static constexpr double kRetractAngle = 0.0;
