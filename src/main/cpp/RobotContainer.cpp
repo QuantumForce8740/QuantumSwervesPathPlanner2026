@@ -65,11 +65,14 @@ void RobotContainer::ConfigureBindings()
                         pidOutput * MaxAngularRate.value()
                     };
 
-                    // 2. Ajustar shooter automáticamente
-                    // shooter.ShootAuto(distance);
+                    // // Obtener velocidad y angulo dependiendo de la distancia
+                    // auto params = ShooterLookupTable::GetShot(distance);
 
-                    // 3. Ajustar hood automáticamente
-                    // hood.SetAngleFromDistance(distance);
+                    // // 2. Ajustar shooter automáticamente
+                    // shooter.SetRPM(params.rpm);
+
+                    // // 3. Ajustar hood automáticamente
+                    // hood.SetAngleDegrees(params.hoodAngle);
                 }
             }
             else
