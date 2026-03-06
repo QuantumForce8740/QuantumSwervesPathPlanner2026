@@ -3,7 +3,22 @@
 
 Vision::Vision() {}
 
-void Vision::Periodic() {}
+void Vision::Periodic() 
+{
+    auto& tab = frc::Shuffleboard::GetTab("Vision");
+
+    tab.AddBoolean("Has Target", [this] { return HasTarget(); });
+
+    tab.AddNumber("Yaw", [this] {
+        auto yaw = GetTargetYaw();
+        return yaw.value_or(0.0);
+    });
+
+    tab.AddNumber("Distance", [this] {
+        auto distance = GetDistanceToTarget();
+        return distance.value_or(0.0);
+    });
+}
 
 std::optional<double> Vision::GetTargetYaw() {
     auto result = m_camera.GetLatestResult();

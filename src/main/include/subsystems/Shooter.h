@@ -1,5 +1,6 @@
 #pragma once
 
+#include <frc/shuffleboard/Shuffleboard.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/SparkMax.h>
 #include <rev/config/SparkMaxConfig.h>
@@ -11,6 +12,8 @@ using namespace rev::spark;
 class Shooter : public frc2::SubsystemBase {
 public:
   Shooter();
+
+  void Periodic() override;
 
   void SetRPM(double rpm);
   void ShootAuto(double distanceMeters);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <frc/shuffleboard/Shuffleboard.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/SparkMax.h>
 #include <rev/config/SparkMaxConfig.h>
@@ -11,6 +12,8 @@ using namespace rev::spark;
 class Hood : public frc2::SubsystemBase {
 public:
     Hood();
+
+    void Periodic() override;
 
     void SetAngleRotations(double rotations);
     void SetAngleDegrees(double degrees);

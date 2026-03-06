@@ -65,6 +65,18 @@ Shooter::Shooter() :
     );
 }
 
+void Shooter::Periodic()
+{
+    auto& tab = frc::Shuffleboard::GetTab("Shooter");
+
+    tab.AddNumber("Shooter RPM", [this] { return GetRPM(); });
+    tab.AddNumber("Target RPM", [this] { return m_targetRPM; });
+
+    tab.AddBoolean("Shooter At Speed", [this] {
+        return AtSetpoint();
+    });
+}
+
 void Shooter::SetRPM(double rpm)
 {
     m_targetRPM = rpm;

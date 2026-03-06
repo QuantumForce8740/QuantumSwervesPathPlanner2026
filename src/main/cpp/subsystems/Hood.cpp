@@ -31,6 +31,15 @@ Hood::Hood()
     m_encoder.SetPosition(0.0);
 }
 
+void Hood::Periodic()
+{
+    auto& tab = frc::Shuffleboard::GetTab("Shooter");
+
+    tab.AddNumber("Hood Angle", [this] {
+        return GetPositionDegrees();
+    });
+}
+
 void Hood::SetAngleRotations(double rotations)
 {
     m_closedLoop.SetSetpoint(
