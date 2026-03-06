@@ -15,7 +15,7 @@ public:
     void Stop();
 
 private:
-    static constexpr int kMotorID = 24; // Cambiar al verdadero
+    static constexpr int kMotorID = 26; // Cambiar al verdadero
     static constexpr double kForwardSpeed = 0.7;
     static constexpr double kReverseSpeed = -0.5;
 

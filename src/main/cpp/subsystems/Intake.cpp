@@ -24,7 +24,7 @@ Intake::Intake() :
     );
 
     deployConfig
-        .Inverted(false) // Cambiar si gira al revés
+        .Inverted(true) // Cambiar si gira al revés
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
         .SmartCurrentLimit(50);
 

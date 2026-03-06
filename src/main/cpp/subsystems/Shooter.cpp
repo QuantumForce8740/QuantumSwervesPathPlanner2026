@@ -24,9 +24,22 @@ Shooter::Shooter() :
     config.Inverted(false)
           .SetIdleMode(SparkMaxConfig::IdleMode::kCoast)
           .SmartCurrentLimit(50);
+    
+    SparkMaxConfig config_motor3;
+    config_motor3.Inverted(true)
+          .SetIdleMode(SparkMaxConfig::IdleMode::kCoast)
+          .SmartCurrentLimit(50);
 
     //PID position control 
     config.closedLoop
+    .P(0.0001)
+    .I(0.0)
+    .D(0.0)
+    .VelocityFF(0.001)//Cambiado por SetFF
+    .OutputRange(-1.0, 1.0);
+
+    //PID position control 
+    config_motor3.closedLoop
     .P(0.0001)
     .I(0.0)
     .D(0.0)
@@ -46,7 +59,7 @@ Shooter::Shooter() :
     );
 
     m_motor3.Configure(
-    config,
+    config_motor3,
     rev::ResetMode::kResetSafeParameters,
     rev::PersistMode::kPersistParameters
     );

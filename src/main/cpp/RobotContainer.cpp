@@ -121,7 +121,7 @@ void RobotContainer::ConfigureBindings()
 
     // joystick.RightBumper().WhileTrue(&alignToTarget);
 
-    // joystick1.A().WhileTrue(
+    // joystick.POVUp().WhileTrue(
     // frc2::StartEndCommand(
     //     [&] { transfer.RunForward(); },  // Cuando presionas
     //     [&] { transfer.Stop(); },        // Cuando sueltas
@@ -129,75 +129,77 @@ void RobotContainer::ConfigureBindings()
     //     ).ToPtr()
     // );
 
-    // joystick1.B().WhileTrue(
-    // frc2::StartEndCommand(
-    //     [&] { transfer.RunReverse(); },
-    //     [&] { transfer.Stop(); },
-    //     {&transfer}
-    //     ).ToPtr()
-    // );
+    // Shoot
+    joystick.POVUp().WhileTrue(
+    frc2::StartEndCommand(
+        [&] { transfer.RunReverse(); },
+        [&] { transfer.Stop(); },
+        {&transfer}
+        ).ToPtr()
+    );
 
-    // joystick1.X().WhileTrue(
-    // frc2::StartEndCommand(
-    //     [&] { feeder.RunForward(); },   // Cuando presionas
-    //     [&] { feeder.Stop(); },         // Cuando sueltas
-    //     {&feeder}
-    //     ).ToPtr()
-    // );
+    joystick.A().WhileTrue(
+    frc2::StartEndCommand(
+        [&] { feeder.RunForward(); },   // Cuando presionas
+        [&] { feeder.Stop(); },         // Cuando sueltas
+        {&feeder}
+        ).ToPtr()
+    );
 
-    // joystick1.Y().WhileTrue(
-    // frc2::StartEndCommand(
-    //     [&] { feeder.RunReverse(); },
-    //     [&] { feeder.Stop(); },
-    //     {&feeder}
-    //     ).ToPtr()
-    // );
+    // Shoot
+    joystick.B().WhileTrue(
+    frc2::StartEndCommand(
+        [&] { feeder.RunReverse(); },
+        [&] { feeder.Stop(); },
+        {&feeder}
+        ).ToPtr()
+    );
     
-    // joystick1.LeftTrigger().OnTrue(SetHoodAtAngle(&hood, 90.0).ToPtr());
+    joystick.POVLeft().OnTrue(SetHoodAtAngle(&hood, 30.0).ToPtr());
 
-    // joystick1.RightTrigger().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
+    joystick.POVRight().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
 
-    // // A → Deploy intake
-    // joystick.POVUp().OnTrue(
-    //     frc2::cmd::RunOnce(
-    //         [this] { intake.Deploy(); },
-    //         {&intake}
-    //     )
-    // );
+    // A → Deploy intake
+    joystick1.A().OnTrue(
+        frc2::cmd::RunOnce(
+            [this] { intake.Deploy(); },
+            {&intake}
+        )
+    );
 
-    // // B → Retract intake
-    // joystick.POVDown().OnTrue(
-    //     frc2::cmd::RunOnce(
-    //         [this] { intake.Retract(); },
-    //         {&intake}
-    //     )
-    // );
+    // B → Retract intake
+    joystick1.B().OnTrue(
+        frc2::cmd::RunOnce(
+            [this] { intake.Retract(); },
+            {&intake}
+        )
+    );
 
-    // // Right Trigger → Intake In (mientras se presiona)
-    // joystick.POVRight().WhileTrue(
-    //     frc2::cmd::Run(
-    //         [this] { intake.IntakeIn(); },
-    //         {&intake}
-    //     )
-    // ).OnFalse(
-    //     frc2::cmd::RunOnce(
-    //         [this] { intake.StopRollers(); },
-    //         {&intake}
-    //     )
-    // );
+    // Right Trigger → Intake In (mientras se presiona)
+    joystick1.X().WhileTrue(
+        frc2::cmd::Run(
+            [this] { intake.IntakeIn(); },
+            {&intake}
+        )
+    ).OnFalse(
+        frc2::cmd::RunOnce(
+            [this] { intake.StopRollers(); },
+            {&intake}
+        )
+    );
 
-    // // Left Trigger → Intake Out
-    // joystick.POVLeft().WhileTrue(
-    //     frc2::cmd::Run(
-    //         [this] { intake.IntakeOut(); },
-    //         {&intake}
-    //     )
-    // ).OnFalse(
-    //     frc2::cmd::RunOnce(
-    //         [this] { intake.StopRollers(); },
-    //         {&intake}
-    //     )
-    // );
+    // Left Trigger → Intake Out
+    joystick1.Y().WhileTrue(
+        frc2::cmd::Run(
+            [this] { intake.IntakeOut(); },
+            {&intake}
+        )
+    ).OnFalse(
+        frc2::cmd::RunOnce(
+            [this] { intake.StopRollers(); },
+            {&intake}
+        )
+    );
 
     // joystick.LeftBumper().WhileTrue(
     //     AimCommand(&vision, &shooter, &hood, &drivetrain)
@@ -207,12 +209,19 @@ void RobotContainer::ConfigureBindings()
     //     ShootCommand(&shooter, &transfer, &feeder)
     // );
 
-    // joystick.X().OnTrue(
-    // frc2::cmd::RunOnce(
-    //     [this] { shooter.SetRPM(3000); },
-    //     {&shooter}
-    //     )
-    // );
+    joystick.X().OnTrue(
+    frc2::cmd::RunOnce(
+        [this] { shooter.SetRPM(4500); },
+        {&shooter}
+        )
+    );
+
+    joystick.Y().OnTrue(
+    frc2::cmd::RunOnce(
+        [this] { shooter.Stop(); },
+        {&shooter}
+        )
+    );
 }
 
 frc2::Command *RobotContainer::GetAutonomousCommand()

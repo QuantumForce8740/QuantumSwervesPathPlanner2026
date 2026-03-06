@@ -24,8 +24,8 @@ public:
 
 private:
 
-    static constexpr int kRollerMotorID = 23; // Cambiar al verdadero
-    static constexpr int kDeployMotorID = 24; // Cambiar al verdadero
+    static constexpr int kRollerMotorID = 20; // Cambiar al verdadero
+    static constexpr int kDeployMotorID = 27; // Cambiar al verdadero
 
     SparkMax m_rollerMotor;
     SparkMax m_deployMotor;
@@ -35,7 +35,7 @@ private:
 
     static constexpr double kGearRatio = 50.0;
 
-    static constexpr double kDeployAngle = 90.0;   // grados
+    static constexpr double kDeployAngle = 70.0;   // grados
     static constexpr double kRetractAngle = 0.0;
 
     double DegreesToMotorRotations(double degrees) const;

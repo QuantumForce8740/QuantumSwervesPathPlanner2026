@@ -24,7 +24,7 @@ private:
 
   double m_targetRPM = 0.0;
 
-  static constexpr int kMotorID = 20; 
+  static constexpr int kMotorID = 21; 
   static constexpr int kMotorID2 = 23;
   static constexpr int kMotorID3 = 24;
 
