@@ -88,6 +88,8 @@ void RobotContainer::ConfigureBindings()
             else
             {
                 alignPID.Reset();
+                shooter.SetRPM(1000);
+                hood.SetAngleDegrees(0.0);
             }
 
             return drive.WithVelocityX(x)
