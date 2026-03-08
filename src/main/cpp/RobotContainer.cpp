@@ -37,17 +37,21 @@ void RobotContainer::ConfigureBindings()
         // Drivetrain will execute this command periodically
         drivetrain.ApplyRequest([this]() -> auto&& {
 
-            double slowMultiplier = joystick.GetLeftTriggerAxis() > 0.1 ? 0.4 : 1.0; // aqui dice que si el gatillo tiene una precion mayor de 0.1  "joystick.GetLeftTriggerAxis() > 0.1 ?"
-                                                                                    //entonces que "slowMultiplier" tenga un valor de .4  " 0.4 "
-                                                                                    // Si no se queda con el valor de 1  ": 1.0;"
+            double slowMultiplier = 1.0;
+
+            if (joystick.LeftTrigger().Get() || joystick.LeftBumper().Get())
+            {
+                slowMultiplier = 0.2;
+            }
 
             units::velocity::meters_per_second_t x = -joystick.GetLeftY() * MaxSpeed * slowMultiplier;
             units::velocity::meters_per_second_t y = -joystick.GetLeftX() * MaxSpeed * slowMultiplier;
-            units::angular_velocity::radians_per_second_t rot = -joystick.GetRightX() * MaxAngularRate * slowMultiplier;
+            units::angular_velocity::radians_per_second_t rot = -joystick.GetRightX() * MaxAngularRate;
 
-            bool alignPressed = joystick.RightBumper().Get();
+            bool alignPressed = joystick.RightBumper().Get() || joystick.RightTrigger().Get();
 
             if (alignPressed && vision.HasTarget())
+            // if (alignPressed)
             {
                 auto yawOpt = vision.GetTargetYaw();
                 auto distanceOpt = vision.GetDistanceToTarget();
@@ -71,8 +75,14 @@ void RobotContainer::ConfigureBindings()
                     // // 2. Ajustar shooter automáticamente
                     // shooter.SetRPM(params.rpm);
 
+                    // For testing
+                    shooter.SetRPM(3000);
+
                     // // 3. Ajustar hood automáticamente
                     // hood.SetAngleDegrees(params.hoodAngle);
+
+                    // For testing
+                    hood.SetAngleDegrees(25.0);
                 }
             }
             else
@@ -94,46 +104,21 @@ void RobotContainer::ConfigureBindings()
         }).IgnoringDisable(true)
     );
 
-    // joystick.A().WhileTrue(drivetrain.ApplyRequest([this]() -> auto&& { return brake; }));
-    // joystick.B().WhileTrue(drivetrain.ApplyRequest([this]() -> auto&& {
-    //     return point.WithModuleDirection(frc::Rotation2d{-joystick.GetLeftY(), -joystick.GetLeftX()});
-    // }));
-
-    // joystick.POVUp().WhileTrue(
-    //     drivetrain.ApplyRequest([this]() -> auto&& {
-    //         return forwardStraight.WithVelocityX(0.5_mps).WithVelocityY(0_mps);
-    //     })
-    // );
-    // joystick.POVDown().WhileTrue(
-    //     drivetrain.ApplyRequest([this]() -> auto&& {
-    //         return forwardStraight.WithVelocityX(-0.5_mps).WithVelocityY(0_mps);
-    //     })
-    // );
-
-    // Run SysId routines when holding back/start and X/Y.
-    // Note that each routine should be run exactly once in a single log.
-    // (joystick.Back() && joystick.Y()).WhileTrue(drivetrain.SysIdDynamic(frc2::sysid::Direction::kForward));
-    // (joystick.Back() && joystick.X()).WhileTrue(drivetrain.SysIdDynamic(frc2::sysid::Direction::kReverse));
-    // (joystick.Start() && joystick.Y()).WhileTrue(drivetrain.SysIdQuasistatic(frc2::sysid::Direction::kForward));
-    // (joystick.Start() && joystick.X()).WhileTrue(drivetrain.SysIdQuasistatic(frc2::sysid::Direction::kReverse));
-
     // reset the field-centric heading on left bumper press
-    joystick.LeftBumper().OnTrue(drivetrain.RunOnce([this] { drivetrain.SeedFieldCentric(); }));
+    joystick.Y().OnTrue(drivetrain.RunOnce([this] { drivetrain.SeedFieldCentric(); }));
 
     drivetrain.RegisterTelemetry([this](auto const &state) { logger.Telemeterize(state); });
 
-    // joystick.RightBumper().WhileTrue(&alignToTarget);
-
-    // joystick.POVUp().WhileTrue(
-    // frc2::StartEndCommand(
-    //     [&] { transfer.RunForward(); },  // Cuando presionas
-    //     [&] { transfer.Stop(); },        // Cuando sueltas
-    //     {&transfer}
-    //     ).ToPtr()
-    // );
-
     // Shoot
-    joystick.POVUp().WhileTrue(
+    joystick1.RightTrigger().WhileTrue(
+    frc2::StartEndCommand(
+        [&] { transfer.RunForward(); },  // Cuando presionas
+        [&] { transfer.Stop(); },        // Cuando sueltas
+        {&transfer}
+        ).ToPtr()
+    );
+
+    joystick1.LeftTrigger().WhileTrue(
     frc2::StartEndCommand(
         [&] { transfer.RunReverse(); },
         [&] { transfer.Stop(); },
@@ -141,7 +126,8 @@ void RobotContainer::ConfigureBindings()
         ).ToPtr()
     );
 
-    joystick.A().WhileTrue(
+    // Shoot
+    joystick1.RightBumper().WhileTrue(
     frc2::StartEndCommand(
         [&] { feeder.RunForward(); },   // Cuando presionas
         [&] { feeder.Stop(); },         // Cuando sueltas
@@ -149,8 +135,7 @@ void RobotContainer::ConfigureBindings()
         ).ToPtr()
     );
 
-    // Shoot
-    joystick.B().WhileTrue(
+    joystick1.LeftBumper().WhileTrue(
     frc2::StartEndCommand(
         [&] { feeder.RunReverse(); },
         [&] { feeder.Stop(); },
@@ -158,28 +143,36 @@ void RobotContainer::ConfigureBindings()
         ).ToPtr()
     );
     
-    joystick.POVLeft().OnTrue(SetHoodAtAngle(&hood, 30.0).ToPtr());
+    // joystick.POVLeft().OnTrue(SetHoodAtAngle(&hood, 25.0).ToPtr());
 
-    joystick.POVRight().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
+    // joystick1.LeftStick().OnTrue(SetHoodAtAngle(&hood, 25.0).ToPtr());
 
-    // A → Deploy intake
-    joystick1.A().OnTrue(
+    // joystick1.POVDown().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
+
+    // Bajar intake
+    joystick1.X().OnTrue(
         frc2::cmd::RunOnce(
             [this] { intake.Deploy(); },
             {&intake}
         )
     );
 
-    // B → Retract intake
-    joystick1.B().OnTrue(
+    // Subir intake
+    joystick1.Y().OnTrue(
         frc2::cmd::RunOnce(
             [this] { intake.Retract(); },
             {&intake}
         )
     );
 
-    // Right Trigger → Intake In (mientras se presiona)
-    joystick1.X().WhileTrue(
+    // Mover pelotas
+    joystick1.RightStick().WhileTrue(
+        OscillateIntake(&intake).ToPtr()
+    );
+
+    // Intake In (mientras se presiona)
+    // Agarra
+    joystick1.A().WhileTrue(
         frc2::cmd::Run(
             [this] { intake.IntakeIn(); },
             {&intake}
@@ -191,8 +184,8 @@ void RobotContainer::ConfigureBindings()
         )
     );
 
-    // Left Trigger → Intake Out
-    joystick1.Y().WhileTrue(
+    // Intake Out
+    joystick1.B().WhileTrue(
         frc2::cmd::Run(
             [this] { intake.IntakeOut(); },
             {&intake}
@@ -204,22 +197,18 @@ void RobotContainer::ConfigureBindings()
         )
     );
 
-    // joystick.LeftBumper().WhileTrue(
-    //     AimCommand(&vision, &shooter, &hood, &drivetrain)
-    // );
+    joystick1.POVUp().WhileTrue(
+        ShootCommand(&transfer, &feeder).ToPtr()
+    );
 
-    // joystick.RightBumper().WhileTrue(
-    //     ShootCommand(&shooter, &transfer, &feeder)
-    // );
-
-    joystick.X().OnTrue(
+    joystick1.LeftStick().OnTrue(
     frc2::cmd::RunOnce(
         [this] { shooter.SetRPM(4500); },
         {&shooter}
         )
     );
 
-    joystick.Y().OnTrue(
+    joystick1.POVDown().OnTrue(
     frc2::cmd::RunOnce(
         [this] { shooter.Stop(); },
         {&shooter}

@@ -7,11 +7,7 @@
 
 #include <frc2/command/CommandScheduler.h>
 
-Robot::Robot() {
-    auto camera = frc::CameraServer::StartAutomaticCapture(0);
-    camera.SetResolution(320, 240);
-    camera.SetFPS(20);
-}
+Robot::Robot() {}
 
 void Robot::RobotPeriodic() {
     m_timeAndJoystickReplay.Update();

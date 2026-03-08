@@ -31,10 +31,8 @@ private:
   static constexpr int kMotorID2 = 23;
   static constexpr int kMotorID3 = 24;
 
-  static constexpr double kForwardSpeedNear = 3000.0;
-  static constexpr double kForwardSpeedFar = 4600.0; 
   static constexpr double kStopShooter = 0.0; 
-  static constexpr double kToleranceRPM = 100.0;
+  static constexpr double kToleranceRPM = 400.0;
 
   SparkMax m_motor1;
   SparkMax m_motor2;

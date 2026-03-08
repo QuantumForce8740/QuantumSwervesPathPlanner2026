@@ -8,7 +8,7 @@ Transfer::Transfer()
     SparkMaxConfig config;
 
     config
-        .Inverted(false)
+        .Inverted(true)
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
         .SmartCurrentLimit(50);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/shuffleboard/Shuffleboard.h>
 #include <rev/SparkMax.h>
 #include <rev/config/SparkMaxConfig.h>
 #include <rev/SparkClosedLoopController.h>
@@ -17,6 +18,7 @@ public:
     void SetAngleDegrees(double degrees);
     double GetAngleDegrees() const;
     void SetDeployPositionRotations(double rotations);
+    bool AtSetpoint();
 
     void IntakeIn();
     void IntakeOut();
@@ -35,8 +37,10 @@ private:
 
     static constexpr double kGearRatio = 50.0;
 
-    static constexpr double kDeployAngle = 70.0;   // grados
+    static constexpr double kDeployAngle = 85.0;   // grados
     static constexpr double kRetractAngle = 0.0;
+
+    double m_targetAngle; 
 
     double DegreesToMotorRotations(double degrees) const;
     double MotorRotationsToDegrees(double rotations) const;

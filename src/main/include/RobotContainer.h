@@ -21,6 +21,7 @@
 #include "commands/Hood/SetHoodAtAngle.h"
 #include "commands/AimCommand.h"
 #include "commands/ShootCommand.h"
+#include "commands/Intake/OscillateIntake.h"
 #include "ShooterLookupTable.h"
 
 class RobotContainer {

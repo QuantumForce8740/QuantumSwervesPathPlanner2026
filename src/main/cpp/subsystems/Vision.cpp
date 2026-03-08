@@ -1,10 +1,7 @@
 #include "subsystems/Vision.h"
 #include <cmath>
 
-Vision::Vision() {}
-
-void Vision::Periodic() 
-{
+Vision::Vision() {
     auto& tab = frc::Shuffleboard::GetTab("Vision");
 
     tab.AddBoolean("Has Target", [this] { return HasTarget(); });
@@ -19,6 +16,8 @@ void Vision::Periodic()
         return distance.value_or(0.0);
     });
 }
+
+void Vision::Periodic() {}
 
 std::optional<double> Vision::GetTargetYaw() {
     auto result = m_camera.GetLatestResult();

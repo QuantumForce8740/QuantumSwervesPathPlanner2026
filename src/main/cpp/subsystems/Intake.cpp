@@ -13,7 +13,7 @@ Intake::Intake() :
     SparkMaxConfig deployConfig;
 
     rollerConfig
-        .Inverted(false) // Cambiar si gira al revés
+        .Inverted(true) // Cambiar si gira al revés
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
         .SmartCurrentLimit(50);
 
@@ -29,7 +29,7 @@ Intake::Intake() :
         .SmartCurrentLimit(50);
 
     deployConfig.closedLoop
-        .P(0.6)   // Ajustar en práctica
+        .P(0.05)   // Ajustar en práctica
         .I(0.0)
         .D(0.0)
         .OutputRange(-0.5, 0.5);
@@ -41,6 +41,17 @@ Intake::Intake() :
     );
 
     m_deployEncoder.SetPosition(0.0); // Home inicial
+    m_targetAngle = 0.0;
+
+    auto& tab = frc::Shuffleboard::GetTab("Shooter");
+
+    tab.AddNumber("Intake Angle", [this] {
+        return GetAngleDegrees();
+    });
+
+    tab.AddBoolean("Intake At Setpoint", [this] {
+        return AtSetpoint();
+    });
 }
 
 void Intake::SetDeployPositionRotations(double rotations)
@@ -53,6 +64,7 @@ void Intake::SetDeployPositionRotations(double rotations)
 
 void Intake::SetAngleDegrees(double degrees)
 {
+    m_targetAngle = degrees;
     double motorRotations = DegreesToMotorRotations(degrees);
 
     m_deployClosedLoop.SetSetpoint(
@@ -84,6 +96,10 @@ double Intake::DegreesToMotorRotations(double degrees) const
 double Intake::MotorRotationsToDegrees(double rotations) const
 {
     return (rotations / kGearRatio) * 360.0;
+}
+
+bool Intake::AtSetpoint(){
+    return std::abs(GetAngleDegrees() - m_targetAngle) < 10;
 }
 
 void Intake::IntakeIn() {

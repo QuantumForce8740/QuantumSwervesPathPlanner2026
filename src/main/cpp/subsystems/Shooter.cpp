@@ -32,7 +32,7 @@ Shooter::Shooter() :
 
     //PID position control 
     config.closedLoop
-    .P(0.0001)
+    .P(0.001)
     .I(0.0)
     .D(0.0)
     .VelocityFF(0.001)//Cambiado por SetFF
@@ -40,7 +40,7 @@ Shooter::Shooter() :
 
     //PID position control 
     config_motor3.closedLoop
-    .P(0.0001)
+    .P(0.001)
     .I(0.0)
     .D(0.0)
     .VelocityFF(0.001)//Cambiado por SetFF
@@ -63,19 +63,19 @@ Shooter::Shooter() :
     rev::ResetMode::kResetSafeParameters,
     rev::PersistMode::kPersistParameters
     );
-}
 
-void Shooter::Periodic()
-{
     auto& tab = frc::Shuffleboard::GetTab("Shooter");
 
     tab.AddNumber("Shooter RPM", [this] { return GetRPM(); });
     tab.AddNumber("Target RPM", [this] { return m_targetRPM; });
+    tab.AddBoolean("Shooter At Speed", [this] { return AtSetpoint(); });
 
-    tab.AddBoolean("Shooter At Speed", [this] {
-        return AtSetpoint();
-    });
+    tab.AddNumber("Flywheel RPM Graph", [this] {
+        return GetRPM();
+    }).WithWidget(frc::BuiltInWidgets::kGraph);
 }
+
+void Shooter::Periodic() {}
 
 void Shooter::SetRPM(double rpm)
 {
