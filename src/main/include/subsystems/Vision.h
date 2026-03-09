@@ -19,4 +19,5 @@ class Vision : public frc2::SubsystemBase {
     
     private: 
         photon::PhotonCamera m_camera{"camera0"};
+        std::optional<int> lockedTag;
 };

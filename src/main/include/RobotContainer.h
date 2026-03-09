@@ -17,6 +17,7 @@
 #include "subsystems/Hood.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
+#include "subsystems/HubVision.h"
 #include "commands/Vision/AlignToTarget.h"
 #include "commands/Hood/SetHoodAtAngle.h"
 #include "commands/AimCommand.h"
@@ -53,10 +54,10 @@ private:
     Hood hood;
     Intake intake;
     Shooter shooter;
+    HubVision hubVision;
 
 public:
     subsystems::CommandSwerveDrivetrain drivetrain{TunerConstants::CreateDrivetrain()};
-    // Vision vision;
 
 private:
     /* Path follower */

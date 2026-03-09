@@ -53,42 +53,67 @@ void RobotContainer::ConfigureBindings()
             if (alignPressed && vision.HasTarget())
             // if (alignPressed)
             {
-                auto yawOpt = vision.GetTargetYaw();
-                auto distanceOpt = vision.GetDistanceToTarget();
-
-                if (yawOpt.has_value())
+                if(hubVision.HasTarget())
                 {
-                    double yaw = yawOpt.value();
-                    double distance = distanceOpt.value();
+                    auto distance = hubVision.GetDistanceToHub();
+                    auto angle = hubVision.GetBearingToHub().Radians().value();
+
+                    std::cout << distance.value() << "\n";
 
                     // 1. Rotación automática
-                    double pidOutput = alignPID.Calculate(yaw, 0);
-                    pidOutput = std::clamp(pidOutput, -1.0, 1.0);
+                    // double pidOutput = alignPID.Calculate(angle, 0);
+                    // pidOutput = std::clamp(pidOutput, -1.0, 1.0);
 
                     rot = units::radians_per_second_t{
-                        pidOutput * MaxAngularRate.value()
+                        angle * MaxAngularRate.value()
                     };
 
-                    // // Obtener velocidad y angulo dependiendo de la distancia
-                    // auto params = ShooterLookupTable::GetShot(distance);
+                    // Obtener velocidad y angulo dependiendo de la distancia
+                    auto params = ShooterLookupTable::GetShot(distance.value());
 
-                    // // 2. Ajustar shooter automáticamente
-                    // shooter.SetRPM(params.rpm);
+                    // 2. Ajustar shooter automáticamente
+                    shooter.SetRPM(params.rpm);
 
-                    // For testing
-                    shooter.SetRPM(3000);
-
-                    // // 3. Ajustar hood automáticamente
-                    // hood.SetAngleDegrees(params.hoodAngle);
-
-                    // For testing
-                    hood.SetAngleDegrees(25.0);
+                    // 3. Ajustar hood automáticamente
+                    hood.SetAngleDegrees(params.hoodAngle);
                 }
+
+                // auto yawOpt = vision.GetTargetYaw();
+                // auto distanceOpt = vision.GetDistanceToTarget();
+
+                // if (yawOpt.has_value())
+                // {
+                //     double yaw = yawOpt.value();
+                //     double distance = distanceOpt.value();
+
+                //     // 1. Rotación automática
+                //     double pidOutput = alignPID.Calculate(yaw, 0);
+                //     pidOutput = std::clamp(pidOutput, -1.0, 1.0);
+
+                //     rot = units::radians_per_second_t{
+                //         pidOutput * MaxAngularRate.value()
+                //     };
+
+                //     // Obtener velocidad y angulo dependiendo de la distancia
+                //     auto params = ShooterLookupTable::GetShot(distance);
+
+                //     // 2. Ajustar shooter automáticamente
+                //     shooter.SetRPM(params.rpm);
+
+                //     // For testing
+                //     // shooter.SetRPM(3300);
+
+                //     // 3. Ajustar hood automáticamente
+                //     hood.SetAngleDegrees(params.hoodAngle);
+
+                //     // For testing
+                //     // hood.SetAngleDegrees(25.0);
+                // }
             }
             else
             {
                 alignPID.Reset();
-                shooter.SetRPM(1000);
+                shooter.SetRPM(1500);
                 hood.SetAngleDegrees(0.0);
             }
 
@@ -147,9 +172,9 @@ void RobotContainer::ConfigureBindings()
     
     // joystick.POVLeft().OnTrue(SetHoodAtAngle(&hood, 25.0).ToPtr());
 
-    // joystick1.LeftStick().OnTrue(SetHoodAtAngle(&hood, 25.0).ToPtr());
+    joystick1.LeftStick().OnTrue(SetHoodAtAngle(&hood, 25.0).ToPtr());
 
-    // joystick1.POVDown().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
+    joystick1.POVDown().OnTrue(SetHoodAtAngle(&hood, 0.0).ToPtr());
 
     // Bajar intake
     joystick1.X().OnTrue(

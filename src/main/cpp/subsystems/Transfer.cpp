@@ -10,7 +10,7 @@ Transfer::Transfer()
     config
         .Inverted(true)
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50);
+        .SmartCurrentLimit(40);
 
     m_motor.Configure(
         config,

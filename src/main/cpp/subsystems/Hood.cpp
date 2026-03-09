@@ -13,7 +13,7 @@ Hood::Hood()
     config
         .Inverted(false)
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50);
+        .SmartCurrentLimit(40);
 
     // PID para posición
     config.closedLoop

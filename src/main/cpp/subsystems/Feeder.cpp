@@ -10,7 +10,7 @@ Feeder::Feeder()
     config.MotorOutput.Inverted = signals::InvertedValue::Clockwise_Positive; // Cambiar si gira al revés
     config.MotorOutput.NeutralMode = signals::NeutralModeValue::Brake;
 
-    config.CurrentLimits.SupplyCurrentLimit = 50_A; //qie significa A 
+    config.CurrentLimits.SupplyCurrentLimit = 40_A; //qie significa A 
     config.CurrentLimits.SupplyCurrentLimitEnable = true; 
      
     m_motor.GetConfigurator().Apply(config);

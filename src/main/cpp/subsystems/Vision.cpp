@@ -23,14 +23,34 @@ std::optional<double> Vision::GetTargetYaw() {
     auto result = m_camera.GetLatestResult();
 
     if (!result.HasTargets())
+    {
+        lockedTag.reset();
         return std::nullopt;
+    }
 
-    auto target = result.GetBestTarget();
+    for (auto target : result.GetTargets())
+    {
+        if (!lockedTag.has_value())
+        {
+            lockedTag = target.GetFiducialId();
+        }
+        
+        if (target.GetFiducialId() == lockedTag.value())
+        {
+            return target.GetYaw();
+        }
+        else
+        {
+            return std::nullopt;
+        }
+    }
 
-    if (target.GetPoseAmbiguity() > 0.2)
-        return std::nullopt;
+    // auto target = result.GetBestTarget();
 
-    return target.GetYaw(); // grados
+    // if (target.GetPoseAmbiguity() > 0.2)
+    //     return std::nullopt;
+
+    // return target.GetYaw(); // grados
 }
 
 std::optional<double> Vision::GetDistanceToTarget()

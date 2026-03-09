@@ -15,7 +15,7 @@ Intake::Intake() :
     rollerConfig
         .Inverted(true) // Cambiar si gira al revés
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50);
+        .SmartCurrentLimit(40);
 
     m_rollerMotor.Configure(
         rollerConfig,
@@ -26,7 +26,7 @@ Intake::Intake() :
     deployConfig
         .Inverted(true) // Cambiar si gira al revés
         .SetIdleMode(SparkMaxConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50);
+        .SmartCurrentLimit(40);
 
     deployConfig.closedLoop
         .P(0.05)   // Ajustar en práctica
