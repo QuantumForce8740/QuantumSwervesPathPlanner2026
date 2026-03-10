@@ -60,6 +60,6 @@ class HubVision : public frc2::SubsystemBase {
 
     // Ejemplo: distancia desde la cara del tag hasta el centro del HUB.
     // CAMBIA esto por tu geometría real medida en CAD.
-    const units::meter_t kHubCenterOffset = 0.56_m;
+    const units::meter_t kHubCenterOffset = -0.56_m;
 
 };

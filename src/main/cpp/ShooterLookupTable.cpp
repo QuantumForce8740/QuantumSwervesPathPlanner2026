@@ -2,12 +2,13 @@
 
 std::map<double, ShotParameters> ShooterLookupTable::table = {
 
-    {1.7, {3000, 5}},
-    {1.9, {3000, 15}},
-    {2.3, {3000, 18}},
-    {2.8, {3000, 21}},
-    {3.3, {3300, 25}},
-
+    {1.4, {3100, 10}},
+    {1.8, {3100, 15}},
+    {2.2, {3100, 19}},
+    {2.6, {3400, 19}},
+    {3.1, {3400, 25}},
+    {3.5, {3400, 25}},
+    {3.7, {3700, 25}},
 };
 
 ShotParameters ShooterLookupTable::GetShot(double distance)

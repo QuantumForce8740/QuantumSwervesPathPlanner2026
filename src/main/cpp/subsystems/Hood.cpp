@@ -1,5 +1,8 @@
 #include "subsystems/Hood.h"
 #include <cmath>
+#include "iostream"
+
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace rev::spark;
 
@@ -29,15 +32,34 @@ Hood::Hood()
     );
 
     m_encoder.SetPosition(0.0);
+    // m_pid.SetTolerance(10.0);
+    // m_pid.EnableContinuousInput(0, 360);
 
-    auto& tab = frc::Shuffleboard::GetTab("Shooter");
+    auto& tab = frc::Shuffleboard::GetTab("Hood");
 
     tab.AddNumber("Hood Angle", [this] {
         return GetPositionDegrees();
     });
+
+    tab.AddNumber("Hood Absolute Raw", [this] {
+        return m_absoluteEncoder.Get();
+    });
+
+    tab.AddBoolean("Hood AtSetpoint", [this] {
+        return m_pid.AtSetpoint();
+    });
 }
 
-void Hood::Periodic() {}
+void Hood::Periodic() {
+    // double output = m_pid.Calculate(GetPositionDegrees(), m_targetAngle);
+
+    // output = std::clamp(output, -0.4, 0.4);
+    // if (m_pid.AtSetpoint())
+    // {
+    //     output = 0.0;
+    // }
+    // m_motor.Set(output);
+}
 
 void Hood::SetAngleRotations(double rotations)
 {
@@ -49,6 +71,17 @@ void Hood::SetAngleRotations(double rotations)
 
 void Hood::SetAngleDegrees(double degrees)
 {
+    m_targetAngle = degrees;
+
+    // if ((GetPositionDegrees() <= degrees + 10.0) && (GetPositionDegrees() >+ degrees - 10.0))
+    // {
+    //     m_motor.Set(0.0);
+    // }
+    // else
+    // {
+    //     m_motor.Set(0.4);
+    // }
+
     SetAngleRotations(DegreesToRotations(degrees));
 }
 
@@ -64,7 +97,15 @@ double Hood::GetPositionRotations() const
 
 double Hood::GetPositionDegrees() const
 {
+    // double angle = ((m_absoluteEncoder.Get() * 360.0) - kEncoderOffset) / kGearRatio;
+    // // angle = std::fmod(angle + 360, 360.0);
+    // // if (angle < 0)
+    // //     angle += 360.0;
+
+    // return angle;
+
     return GetPositionRotations() * kDegreesPerRotation;
+
 }
 
 double Hood::DegreesToRotations(double degrees) const

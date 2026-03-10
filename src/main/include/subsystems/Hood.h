@@ -6,6 +6,8 @@
 #include <rev/config/SparkMaxConfig.h>
 #include <rev/SparkClosedLoopController.h>
 #include <rev/RelativeEncoder.h>
+#include <frc/DutyCycleEncoder.h>
+#include <frc/controller/PIDController.h>
 
 using namespace rev::spark;
 
@@ -32,9 +34,15 @@ private:
     static constexpr double kGearRatio = 50.0;          // cambiar si hay reducción
     static constexpr double kDegreesPerRotation = 360.0 / kGearRatio;
 
+    static constexpr double kEncoderOffset = 0.0;  // ajustar despues
+
     SparkMax m_motor;
     SparkClosedLoopController m_closedLoop;
     SparkRelativeEncoder m_encoder;
+
+    frc::DutyCycleEncoder m_absoluteEncoder{0};
+    frc::PIDController m_pid{0.5, 0.0, 0.0};
+    double m_targetAngle = 0.0;
 
     double DegreesToRotations(double degrees) const;
 };
