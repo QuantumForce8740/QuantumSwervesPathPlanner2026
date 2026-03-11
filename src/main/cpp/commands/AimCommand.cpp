@@ -1,10 +1,10 @@
 #include "commands/AimCommand.h"
 
 AimCommand::AimCommand(
-    Vision* vision,
+    HubVision* hubVision,
     Shooter* shooter,
     Hood* hood)
-    : m_vision(vision),
+    : m_hubVision(hubVision),
       m_shooter(shooter),
       m_hood(hood)
 {
@@ -15,20 +15,16 @@ void AimCommand::Initialize() {}
 
 void AimCommand::Execute()
 {
-    auto yawOpt = m_vision->GetTargetYaw();
-    auto distanceOpt = m_vision->GetDistanceToTarget();
+    auto distance = m_hubVision->GetDistanceToHub();
 
-    if (!yawOpt.has_value() || !distanceOpt.has_value())
-        return;
+    // Obtener velocidad y angulo dependiendo de la distancia
+    auto params = ShooterLookupTable::GetShot(distance.value());
 
-    double yaw = yawOpt.value();
-    double distance = distanceOpt.value();
+    // 2. Ajustar shooter automáticamente
+    m_shooter->SetRPM(params.rpm);
 
-    // 2. Ajustar RPM
-    m_shooter->ShootAuto(distance);
-
-    // 3. Ajustar hood
-    m_hood->SetAngleFromDistance(distance);
+    // 3. Ajustar hood automáticamente
+    m_hood->SetAngleDegrees(params.hoodAngle);
 }
 
 void AimCommand::End(bool interrupted)

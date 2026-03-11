@@ -15,6 +15,37 @@
           "data": {
             "name": "AlignToTarget"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "HubAimCommandFirst"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "HubAimCommandParallel"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ResetAllSubsystems"
+          }
         }
       ]
     }

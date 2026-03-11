@@ -25,6 +25,7 @@
 #include "commands/Intake/OscillateIntake.h"
 #include "commands/HubAimCommand.h"
 #include "commands/NeutralAimCommand.h"
+#include "commands/ResetAllSubsystems.h"
 #include "ShooterLookupTable.h"
 
 class RobotContainer {
@@ -49,7 +50,7 @@ private:
     frc2::CommandXboxController joystick1{1};
 
     Vision vision;
-    AlignToTarget alignToTarget{&drivetrain, &vision};
+    AlignToTarget alignToTarget{&drivetrain, &hubVision};
 
     Transfer transfer;
     Feeder feeder;
