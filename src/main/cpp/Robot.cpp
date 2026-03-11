@@ -32,6 +32,7 @@ void Robot::RobotPeriodic() {
             m_container.drivetrain.AddVisionMeasurement(llMeasurement->pose, llMeasurement->timestampSeconds);
         }
     }
+    frc::SmartDashboard::PutNumber("Match Time", frc::DriverStation::GetMatchTime().value());
 }
 
 void Robot::DisabledInit() {}

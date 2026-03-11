@@ -43,15 +43,8 @@ Intake::Intake() :
     m_deployEncoder.SetPosition(0.0); // Home inicial
     m_targetAngle = 0.0;
 
-    auto& tab = frc::Shuffleboard::GetTab("Shooter");
-
-    tab.AddNumber("Intake Angle", [this] {
-        return GetAngleDegrees();
-    });
-
-    tab.AddBoolean("Intake At Setpoint", [this] {
-        return AtSetpoint();
-    });
+    frc::SmartDashboard::PutNumber("Intake Angle", GetAngleDegrees());
+    frc::SmartDashboard::PutNumber("Intake At Setpoint", AtSetpoint());
 }
 
 void Intake::SetDeployPositionRotations(double rotations)

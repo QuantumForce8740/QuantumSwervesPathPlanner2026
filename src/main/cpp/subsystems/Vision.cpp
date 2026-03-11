@@ -2,19 +2,9 @@
 #include <cmath>
 
 Vision::Vision() {
-    auto& tab = frc::Shuffleboard::GetTab("Vision");
-
-    tab.AddBoolean("Has Target", [this] { return HasTarget(); });
-
-    tab.AddNumber("Yaw", [this] {
-        auto yaw = GetTargetYaw();
-        return yaw.value_or(0.0);
-    });
-
-    tab.AddNumber("Distance", [this] {
-        auto distance = GetDistanceToTarget();
-        return distance.value_or(0.0);
-    });
+    frc::SmartDashboard::PutNumber("Has Target", HasTarget());
+    frc::SmartDashboard::PutNumber("Yaw", GetTargetYaw().value_or(0.0));
+    frc::SmartDashboard::PutNumber("Distance", GetDistanceToTarget().value_or(0.0));
 }
 
 void Vision::Periodic() {}

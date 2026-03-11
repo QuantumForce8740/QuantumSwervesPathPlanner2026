@@ -23,6 +23,8 @@
 #include "commands/AimCommand.h"
 #include "commands/ShootCommand.h"
 #include "commands/Intake/OscillateIntake.h"
+#include "commands/HubAimCommand.h"
+#include "commands/NeutralAimCommand.h"
 #include "ShooterLookupTable.h"
 
 class RobotContainer {

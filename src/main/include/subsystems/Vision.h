@@ -1,6 +1,6 @@
 #pragma once
 
-#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <photon/PhotonCamera.h>
 #include <photon/targeting/PhotonPipelineResult.h>
 #include <photon/targeting/PhotonTrackedTarget.h>

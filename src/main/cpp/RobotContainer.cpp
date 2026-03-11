@@ -118,7 +118,7 @@ void RobotContainer::ConfigureBindings()
                     // hood.SetAngleDegrees(25.0);
                 // }
             }
-            else
+            else if (!alignPressed && !joystick1.LeftStick().Get() && !joystick1.POVRight().Get() && !joystick1.POVUpRight().Get() )
             {
                 alignPID.Reset();
                 shooter.SetRPM(1500);
@@ -178,21 +178,25 @@ void RobotContainer::ConfigureBindings()
         ).ToPtr()
     );
     
-    joystick1.POVLeft().OnTrue(
-        frc2::StartEndCommand(
-            [&] { hood.SetAngleDegrees(25.0); },
-            [&] { hood.Stop(); },
-            {&hood}
-            ).ToPtr()
-        );
+    // Lanzar a Hub sin camara
+    joystick1.LeftStick().WhileTrue(HubAimCommand(&shooter, &hood).ToPtr());
 
-    joystick1.LeftStick().OnTrue(
-        frc2::StartEndCommand(
-            [&] { hood.SetAngleDegrees(0.0); },
-            [&] { hood.Stop(); },
-            {&hood}
-            ).ToPtr()
-        );
+    joystick1.POVRight().WhileTrue(NeutralAimCommand(&shooter, &hood).ToPtr());
+
+    // // Lanzar desde Neutral a Alianza
+    // joystick1.POVRight().WhileTrue(
+    //     frc2::StartEndCommand(
+    //         [&] { 
+    //             shooter.SetRPM(3700);
+    //             hood.SetAngleDegrees(25.0); 
+    //         },
+    //         [&] { 
+    //             shooter.SetRPM(0);
+    //             hood.Stop();  
+    //         },
+    //         {&shooter, &hood}
+    //         ).ToPtr()
+    //     );
 
     // Bajar intake
     joystick1.X().OnTrue(
@@ -246,11 +250,8 @@ void RobotContainer::ConfigureBindings()
         ShootCommand(&transfer, &feeder).ToPtr()
     );
 
-    joystick1.LeftStick().OnTrue(
-    frc2::cmd::RunOnce(
-        [this] { shooter.SetRPM(4500); },
-        {&shooter}
-        )
+    joystick1.POVUpRight().WhileTrue(
+        ShootCommand(&transfer, &feeder).ToPtr()
     );
 
     joystick1.POVDown().OnTrue(

@@ -56,7 +56,7 @@ class HubVision : public frc2::SubsystemBase {
     };
 
     // IDs de AprilTags que pertenecen al HUB
-    const std::array<int, 2> kHubTagIds{9, 10};
+    const std::array<int, 4> kHubTagIds{9, 10, 25, 26};
 
     // Ejemplo: distancia desde la cara del tag hasta el centro del HUB.
     // CAMBIA esto por tu geometría real medida en CAD.

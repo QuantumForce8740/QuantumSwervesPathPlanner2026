@@ -35,19 +35,9 @@ Hood::Hood()
     // m_pid.SetTolerance(10.0);
     // m_pid.EnableContinuousInput(0, 360);
 
-    auto& tab = frc::Shuffleboard::GetTab("Hood");
-
-    tab.AddNumber("Hood Angle", [this] {
-        return GetPositionDegrees();
-    });
-
-    tab.AddNumber("Hood Absolute Raw", [this] {
-        return m_absoluteEncoder.Get();
-    });
-
-    tab.AddBoolean("Hood AtSetpoint", [this] {
-        return m_pid.AtSetpoint();
-    });
+    frc::SmartDashboard::PutNumber("Hood Angle", GetPositionDegrees());
+    frc::SmartDashboard::PutNumber("Hood Absolute Raw", m_absoluteEncoder.Get());
+    frc::SmartDashboard::PutNumber("Hood AtSetpoint", m_pid.AtSetpoint());
 }
 
 void Hood::Periodic() {

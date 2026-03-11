@@ -146,7 +146,17 @@ frc::Transform3d HubVision::GetTagToHub(int fiducialId) const {
           frc::Translation3d{kHubCenterOffset, 0_m, 0_m},
           frc::Rotation3d{}};
 
+    case 26:
+      return frc::Transform3d{
+          frc::Translation3d{kHubCenterOffset, 0_m, 0_m},
+          frc::Rotation3d{}};
+
     case 9:
+      return frc::Transform3d{
+          frc::Translation3d{kHubCenterOffset, 0.56_m, 0_m},
+          frc::Rotation3d{}};
+
+    case 25:
       return frc::Transform3d{
           frc::Translation3d{kHubCenterOffset, 0.56_m, 0_m},
           frc::Rotation3d{}};

@@ -64,15 +64,9 @@ Shooter::Shooter() :
     rev::PersistMode::kPersistParameters
     );
 
-    auto& tab = frc::Shuffleboard::GetTab("Shooter");
-
-    tab.AddNumber("Shooter RPM", [this] { return GetRPM(); });
-    tab.AddNumber("Target RPM", [this] { return m_targetRPM; });
-    tab.AddBoolean("Shooter At Speed", [this] { return AtSetpoint(); });
-
-    tab.AddNumber("Flywheel RPM Graph", [this] {
-        return GetRPM();
-    }).WithWidget(frc::BuiltInWidgets::kGraph);
+    frc::SmartDashboard::PutNumber("Shooter RPM", GetRPM());
+    frc::SmartDashboard::PutNumber("Target RPM", m_targetRPM);
+    frc::SmartDashboard::PutBoolean("Shooter At Speed", AtSetpoint());
 }
 
 void Shooter::Periodic() {}
