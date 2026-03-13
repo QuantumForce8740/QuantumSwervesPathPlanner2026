@@ -1,0 +1,77 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 15.392011363636364,
+        "y": 2.0560909090909094
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 15.640619157421137,
+        "y": 2.0297439003523907
+      },
+      "isLocked": false,
+      "linkedName": "EndBackRedLeft"
+    },
+    {
+      "anchor": {
+        "x": 14.45409090909091,
+        "y": 2.0582051282051292
+      },
+      "prevControl": {
+        "x": 14.48803205133902,
+        "y": 2.520983241660687
+      },
+      "nextControl": {
+        "x": 14.435663120707826,
+        "y": 1.806947316056629
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 15.392011363636364,
+        "y": 1.6232045454545458
+      },
+      "prevControl": {
+        "x": 14.803560313052337,
+        "y": 1.644831964263541
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "redenddepot2",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.001,
+    "rotation": 1.5481576989780048
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0.001,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

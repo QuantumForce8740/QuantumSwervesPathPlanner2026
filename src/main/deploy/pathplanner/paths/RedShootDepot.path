@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.630653846153844,
-        "y": 2.0582051282051292
+        "x": 15.392011363636364,
+        "y": 2.386
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.24642548720164,
-        "y": 2.256750171511573
+        "x": 15.710213436809294,
+        "y": 2.2878346261228093
       },
       "isLocked": false,
       "linkedName": "EndDepotRed"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 1.5481576989780048
   },
   "useDefaultConstraints": true
 }

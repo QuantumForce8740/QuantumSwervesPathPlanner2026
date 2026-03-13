@@ -5,21 +5,60 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "RedLeftBack"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RedLeftBack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployIntake"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "RedGoDepot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "OscillateIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RedEndDepot2"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "RedEndDepot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "OscillateIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RedEndDepot"
+                }
+              }
+            ]
           }
         },
         {
