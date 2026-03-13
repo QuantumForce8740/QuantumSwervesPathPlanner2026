@@ -74,17 +74,8 @@ void RobotContainer::ConfigureBindings()
                 if(hubVision.HasTarget())
                 {
                     auto distance = hubVision.GetDistanceToHub();
-                    auto angle = hubVision.GetBearingToHub().Radians().value();
 
                     std::cout << distance.value() << "\n";
-
-                    // 1. Rotación automática
-                    double pidOutput = alignPID.Calculate(angle, 0);
-                    pidOutput = std::clamp(pidOutput, -1.0, 1.0);
-
-                    rot = units::radians_per_second_t{
-                        angle * MaxAngularRate.value()
-                    };
 
                     // Obtener velocidad y angulo dependiendo de la distancia
                     auto params = ShooterLookupTable::GetShot(distance.value());
@@ -135,6 +126,21 @@ void RobotContainer::ConfigureBindings()
                     // For testing
                     // hood.SetAngleDegrees(25.0);
                 // }
+            }
+            else if (joystick.A().Get())
+            {
+                if(hubVision.HasTarget())
+                {
+                    auto angle = hubVision.GetBearingToHub().Radians().value();
+
+                    // 1. Rotación automática
+                    double pidOutput = alignPID.Calculate(angle, 0);
+                    pidOutput = std::clamp(pidOutput, -1.0, 1.0);
+
+                    rot = units::radians_per_second_t{
+                        angle * MaxAngularRate.value()
+                    };
+                }
             }
             else if (!alignPressed && !joystick1.LeftStick().Get() && !joystick1.POVRight().Get() && !joystick1.POVUpRight().Get() )
             {
