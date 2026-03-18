@@ -12,15 +12,15 @@
         "y": 4.05
       },
       "isLocked": false,
-      "linkedName": "StartRedCenter"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.55,
+        "x": 13.959363636363637,
         "y": 4.05
       },
       "prevControl": {
-        "x": 14.292154398296905,
+        "x": 13.701518034660541,
         "y": 4.05
       },
       "nextControl": null,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

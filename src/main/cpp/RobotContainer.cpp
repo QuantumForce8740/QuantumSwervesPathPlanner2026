@@ -145,7 +145,7 @@ void RobotContainer::ConfigureBindings()
             else if (!alignPressed && !joystick1.LeftStick().Get() && !joystick1.POVRight().Get() && !joystick1.POVUpRight().Get() )
             {
                 alignPID.Reset();
-                shooter.SetRPM(1500);
+                shooter.SetRPM(0.0);
                 hood.SetAngleDegrees(0.0);
             }
 

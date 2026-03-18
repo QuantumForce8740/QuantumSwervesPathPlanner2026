@@ -14,7 +14,7 @@ void HubAimCommand::Initialize() {}
 void HubAimCommand::Execute()
 {
     // 2. Ajustar RPM
-    m_shooter->SetRPM(3000);
+    m_shooter->SetRPM(3500);
 
     // 3. Ajustar hood
     m_hood->SetAngleDegrees(20.0);
