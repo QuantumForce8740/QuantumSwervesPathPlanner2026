@@ -15,11 +15,11 @@ RobotContainer::RobotContainer()
     pathplanner::NamedCommands::registerCommand("AlignToTarget", AlignToTarget(&drivetrain, &hubVision).ToPtr().WithTimeout(0.5_s));
     pathplanner::NamedCommands::registerCommand("HubAimCommandFirst", AimCommand(&hubVision, &shooter, &hood).ToPtr().WithTimeout(2_s));
     pathplanner::NamedCommands::registerCommand("HubAimCommandParallel", AimCommand(&hubVision, &shooter, &hood).ToPtr().WithTimeout(5_s));
-    pathplanner::NamedCommands::registerCommand("HubAimCommandParallelLong", AimCommand(&hubVision, &shooter, &hood).ToPtr().WithTimeout(6_s));
+    pathplanner::NamedCommands::registerCommand("HubAimCommandParallelLong", AimCommand(&hubVision, &shooter, &hood).ToPtr().WithTimeout(10_s));
     pathplanner::NamedCommands::registerCommand("ShootCommand", ShootCommand(&transfer, &feeder).ToPtr().WithTimeout(5_s));
-    pathplanner::NamedCommands::registerCommand("ShootCommandLong", ShootCommand(&transfer, &feeder).ToPtr().WithTimeout(6_s));
+    pathplanner::NamedCommands::registerCommand("ShootCommandLong", ShootCommand(&transfer, &feeder).ToPtr().WithTimeout(10_s));
     pathplanner::NamedCommands::registerCommand("ResetAllSubsystems", ResetAllSubsystems(&shooter, &hood, &transfer, &feeder).ToPtr());
-    pathplanner::NamedCommands::registerCommand("OscillateIntake", OscillateIntake(&intake).ToPtr().WithTimeout(5_s));
+    pathplanner::NamedCommands::registerCommand("OscillateIntake", OscillateIntake(&intake).ToPtr().WithTimeout(10_s));
     pathplanner::NamedCommands::registerCommand("DeployIntake", 
         frc2::cmd::RunOnce(
             [this] { intake.Deploy(); },
@@ -29,7 +29,7 @@ RobotContainer::RobotContainer()
         frc2::cmd::RunOnce(
             [this] { intake.IntakeIn(); },
             {&intake}
-        ));
+        ).WithTimeout(5_s));
 
     autoChooser = pathplanner::AutoBuilder::buildAutoChooser("RedCenter");
     frc::SmartDashboard::PutData("Auto Mode", &autoChooser);
