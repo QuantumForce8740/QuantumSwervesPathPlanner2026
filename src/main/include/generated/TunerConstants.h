@@ -19,7 +19,7 @@ class TunerConstants {
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
     // output type specified by SwerveModuleConstants::SteerMotorClosedLoopOutput
     static constexpr configs::Slot0Configs steerGains = configs::Slot0Configs{}
-        .WithKP(20).WithKI(0).WithKD(0)
+        .WithKP(20).WithKI(0).WithKD(0.5)
         .WithKS(0.1).WithKV(2.49).WithKA(0)
         .WithStaticFeedforwardSign(signals::StaticFeedforwardSignValue::UseClosedLoopSign);
     // When using closed-loop control, the drive motor uses the control
@@ -59,7 +59,6 @@ class TunerConstants {
                 .WithStatorCurrentLimit(60_A)
                 .WithStatorCurrentLimitEnable(true)
         );
-
     static constexpr configs::CANcoderConfiguration encoderInitialConfigs{};
     // Configs for the Pigeon 2; leave this nullopt to skip applying Pigeon 2 configs
     static constexpr std::optional<configs::Pigeon2Configuration> pigeonConfigs = std::nullopt;
@@ -131,7 +130,7 @@ private:
     static constexpr int kFrontLeftDriveMotorId = 0;
     static constexpr int kFrontLeftSteerMotorId = 3;
     static constexpr int kFrontLeftEncoderId = 9;
-    static constexpr units::turn_t kFrontLeftEncoderOffset = 0.02490234375_tr;
+    static constexpr units::turn_t kFrontLeftEncoderOffset = 0.02392578125_tr;
     static constexpr bool kFrontLeftSteerMotorInverted = false;
     static constexpr bool kFrontLeftEncoderInverted = false;
 
@@ -142,7 +141,7 @@ private:
     static constexpr int kFrontRightDriveMotorId = 1;
     static constexpr int kFrontRightSteerMotorId = 7;
     static constexpr int kFrontRightEncoderId = 8;
-    static constexpr units::turn_t kFrontRightEncoderOffset = 0.02685546875_tr;
+    static constexpr units::turn_t kFrontRightEncoderOffset = 0.026611328125_tr;
     static constexpr bool kFrontRightSteerMotorInverted = false;
     static constexpr bool kFrontRightEncoderInverted = false;
 
@@ -153,7 +152,7 @@ private:
     static constexpr int kBackLeftDriveMotorId = 5;
     static constexpr int kBackLeftSteerMotorId = 2;
     static constexpr int kBackLeftEncoderId = 10;
-    static constexpr units::turn_t kBackLeftEncoderOffset = 0.464599609375_tr;
+    static constexpr units::turn_t kBackLeftEncoderOffset = 0.455078125_tr;
     static constexpr bool kBackLeftSteerMotorInverted = false;
     static constexpr bool kBackLeftEncoderInverted = false;
 
@@ -164,7 +163,7 @@ private:
     static constexpr int kBackRightDriveMotorId = 6;
     static constexpr int kBackRightSteerMotorId = 4;
     static constexpr int kBackRightEncoderId = 11;
-    static constexpr units::turn_t kBackRightEncoderOffset = 0.35888671875_tr;
+    static constexpr units::turn_t kBackRightEncoderOffset = 0.361328125_tr;
     static constexpr bool kBackRightSteerMotorInverted = false;
     static constexpr bool kBackRightEncoderInverted = false;
 
@@ -250,10 +249,10 @@ public:
      *                                   unspecified or set to 0 Hz, this is 250 Hz on
      *                                   CAN FD, and 100 Hz on CAN 2.0.
      * \param odometryStandardDeviation  The standard deviation for odometry calculation
-     *                                   in the form [x, y, theta]ᵀ, with units in meters
+     *                                   in the form [x, y, theta]áµ€, with units in meters
      *                                   and radians
      * \param visionStandardDeviation    The standard deviation for vision calculation
-     *                                   in the form [x, y, theta]ᵀ, with units in meters
+     *                                   in the form [x, y, theta]áµ€, with units in meters
      *                                   and radians
      * \param modules                    Constants for each specific module
      */
